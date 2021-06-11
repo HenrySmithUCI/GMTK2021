@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public class LevelController : TileMap
 {
@@ -10,6 +11,9 @@ public class LevelController : TileMap
 
     // player is always entities[0]
     public BoxData[] entities;
+
+    // entities that are under control
+    public List<BoxData> active = new List<BoxData>();
 
     public static int gridSize = 16;
 
@@ -22,7 +26,7 @@ public class LevelController : TileMap
             {
                 if (walls[i, j] == 1)
                 {
-                    SetCell(i, j, 0);
+                    SetCell(j, i, 0);
                 }
             }
         }
@@ -36,6 +40,8 @@ public class LevelController : TileMap
             AddChild(box);
             b.box = box;
         }
+
+        active.Add(entities[0]);
     }
 
     public override void _Process(float delta)
@@ -62,11 +68,29 @@ public class LevelController : TileMap
     // should handle combining, only handles player movement atm
     private void move(Vector2 dir)
     {
-        Vector2 nextPos = entities[0].position + dir;
+        bool canMove = true;
+        List<BoxData> moving = new List<BoxData>(active);
 
-        if(checkFree(nextPos))
+        foreach (BoxData b in moving)
         {
-            entities[0].move(nextPos);
+            Vector2 nextPos = b.position + dir;
+
+            if (!checkFree(nextPos))
+            {
+                canMove = false;
+            }
+        }
+
+        if (canMove)
+        {
+            foreach (BoxData b in moving)
+            {
+                Vector2 nextPos = b.position + dir;
+
+                b.move(nextPos);
+
+                attachNeighbors(nextPos);
+            }
         }
     }
 
@@ -83,7 +107,8 @@ public class LevelController : TileMap
         }
 
         // if there is a wall in the way
-        if(walls[(int)pos.x, (int)pos.y] == 1)
+        // reversed to match the array position visually
+        if(walls[(int)pos.y, (int)pos.x] == 1)
         {
             return false;
         }
@@ -91,12 +116,24 @@ public class LevelController : TileMap
         // if there is an entity in the way
         for(int i = 0; i < entities.Length; i++)
         {
-            if(entities[i].position == pos)
+            if(entities[i].position == pos && !active.Contains(entities[i]))
             {
                 return false;
             }
         }
 
         return true;
+    }
+
+    // attach any neighbors to active
+    private void attachNeighbors(Vector2 pos)
+    {
+        foreach(BoxData b in entities)
+        {
+            if(b.position.DistanceTo(pos) < 1.1f && !active.Contains(b))
+            {
+                active.Add(b);
+            }
+        }
     }
 }
