@@ -47,21 +47,17 @@
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
     <Reference Include="GodotSharp">
+      <HintPath>$(ProjectDir)\.mono\assemblies\$(ApiConfiguration)\GodotSharp.dll</HintPath>
       <Private>False</Private>
-      <HintPath>$(ProjectDir)/.mono/assemblies/$(ApiConfiguration)/GodotSharp.dll</HintPath>
     </Reference>
     <Reference Include="GodotSharpEditor" Condition=" '$(Configuration)' == 'Debug' ">
+      <HintPath>$(ProjectDir)\.mono\assemblies\$(ApiConfiguration)\GodotSharpEditor.dll</HintPath>
       <Private>False</Private>
-      <HintPath>$(ProjectDir)/.mono/assemblies/$(ApiConfiguration)/GodotSharpEditor.dll</HintPath>
     </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include=".prop\AssemblyInfo.cs" />
-    <Compile Include="Ian\Box.cs" />
-    <Compile Include="Ian\BoxData.cs" />
-    <Compile Include="Ian\LevelController.cs" />
-    <Compile Include="Ian\LevelTemplate.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
