@@ -2,33 +2,30 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
+//Key:
+//Space: empty
+//0: wall
+//f,w,g,s: non player blob of fire, water, grass, or stone
+//F,W,G,S: player blob
+//b: burnable box
+//i: ice
 public class LevelTemplate : LevelController
 {
     public override void _Ready()
     {
-        int[,] walls = new int[,] { 
-                            { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
-                            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
-                            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                            { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
-        entities = new List<EntityData>()
-        {
-            new PlayerData(new Vector2(5,5), BlobElement.GRASS),
-            new BlobData(new Vector2(7,5), BlobElement.FIRE),
-            new BlobData(new Vector2(7,7), BlobElement.STONE),
-            new BlobData(new Vector2(3,5), BlobElement.WATER),
-            new BlobData(new Vector2(5,7), BlobElement.WATER),
-            new BlobData(new Vector2(9,5), BlobElement.BOX),
-            new BlobData(new Vector2(8,3), BlobElement.ICE),
-        };
+        string level = 
+"00000000000000000000" +
+"0                  0" +
+"0                  0" +
+"0   gg     00      0" +
+"0           0      0" +
+"0   F  w           0" +
+"0                  0" +
+"0   s       W      0" +
+"0                  0" +
+"0                  0" +
+"00000000000000000000";
 
-        setUpLevel(walls);
+        setUpLevel(level);
     }
 }

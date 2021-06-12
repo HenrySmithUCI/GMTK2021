@@ -12,7 +12,7 @@ public class LevelController : TileMap
     public Tile[,] tiles;
     public List<EntityData> entities;
     public Dictionary<EntityData, Node2D> entityNodes;
-    public PlayerData player;
+    public List<PlayerData> players;
     public int turnNumber = 0;
 
     // player is always entities[0]
@@ -23,30 +23,52 @@ public class LevelController : TileMap
 
     //public static int gridSize = 16;
 
-    public int width;
-    public int height;
+    public int width = 20;
+    public int height = 11;
 
-    protected void setUpLevel(int[,] walls)
+    protected void setUpLevel(string levelString)
     {
-        height = walls.GetLength(0);
-        width = walls.GetLength(1);
         tiles = new Tile[width, height];
         entityNodes = new Dictionary<EntityData, Node2D>();
+        entities = new List<EntityData>();
+        players = new List<PlayerData>();
 
         // turn info from walls into auto tile map
-        for(int i = 0; i < width; i++)
+        for(int y = 0; y < height; y++)
         {
-            for(int j = 0; j < height; j++)
+            for(int x = 0; x < width; x++)
             {
-                if (walls[j, i] == 1)
+                char c = levelString[y*width+x];
+                switch(c)
                 {
-                    tiles[i,j] = new Tile(true);
-                    SetCell(i, j, 1);
-                }
-                if(walls[j,i] == 0)
-                {
-                    tiles[i,j] = new Tile(false);
-                    SetCell(i,j, 0);
+                    case ' ':
+                        tiles[x,y] = new Tile(false);
+                        SetCell(x, y, 0);
+                    break;
+                    case '0':
+                        tiles[x,y] = new Tile(true);
+                        SetCell(x, y, 1);
+                        break;
+                    case 'g':
+                    case 'w':
+                    case 'f':
+                    case 's':
+                        entities.Add(new BlobData(new Vector2(x,y), charToElement(c)));
+                        tiles[x,y] = new Tile(false);
+                        SetCell(x, y, 0);
+                        break;
+                    case 'G':
+                    case 'W':
+                    case 'F':
+                    case 'S':
+                        entities.Add(new PlayerData(new Vector2(x,y), charToElement(char.ToLower(c))));
+                        tiles[x,y] = new Tile(false);
+                        SetCell(x, y, 0);
+                        break;
+                    case 'i':
+                    break;
+                    case 'b':
+                    break;
                 }
             }
         }
@@ -70,7 +92,7 @@ public class LevelController : TileMap
                 Blob blob;
                 if(entity is PlayerData p)
                 {
-                    player = p;
+                    players.Add(p);
                     blob = (Blob)playerScene.Instance();
                 }
                 else
@@ -99,6 +121,23 @@ public class LevelController : TileMap
         */
     }
 
+    public BlobElement charToElement(char type)
+    {
+        switch(type)
+        {
+            case 'f':
+                return BlobElement.FIRE;
+            case 'w':
+                return BlobElement.WATER;
+            case 'g':
+                return BlobElement.GRASS;
+            case 's':
+                return BlobElement.STONE;
+            default:
+                return BlobElement.STONE;
+        }
+    }
+
     public Tile getTile(Vector2 tilePos)
     {
         if(tilePos.x < 0 || tilePos.x >= width || tilePos.y < 0 || tilePos.y >= height)
@@ -110,7 +149,7 @@ public class LevelController : TileMap
 
     public override void _Process(float delta)
     {
-        if (player != null)
+        if (players.Count > 0)
         {
             if (Input.IsActionJustPressed("right"))
             {
@@ -132,18 +171,16 @@ public class LevelController : TileMap
         }
     }
 
-    private HashSet<BlobData> getActiveBlobs()
+    private HashSet<BlobData> getActiveBlobs(int i)
     {
         HashSet<BlobData> connected = new HashSet<BlobData>() {};
-        List<BlobData> fronteir = new List<BlobData>() {player};
-        HashSet<BlobData> seen = new HashSet<BlobData>() {player};
+        List<BlobData> fronteir = new List<BlobData>() {players[i]};
+        HashSet<BlobData> seen = new HashSet<BlobData>() {players[i]};
         while(fronteir.Count > 0)
         {
             BlobData data = fronteir[0];
             fronteir.RemoveAt(0);
             connected.Add(data);
-            //GD.Print(data.element);
-            //GD.Print(data.countConnections());
             foreach(BlobData check in data.connected)
             {
                 if(check != null && seen.Contains(check) == false && check.deathFlag == false)
@@ -161,15 +198,24 @@ public class LevelController : TileMap
     {
         turnNumber += 1;
 
-        bool canMove = true;
-        HashSet<BlobData> moving = getActiveBlobs();
+        HashSet<PlayerData> seen = new HashSet<PlayerData>();
 
-        foreach (BlobData b in moving)
+        for(int i = 0; i < players.Count; ++i)
         {
-            if (b.element != BlobElement.ICE)
+            if(seen.Contains(players[i]))
+                continue;
+            
+            bool canMove = true;
+            HashSet<BlobData> moving = getActiveBlobs(i);
+
+            foreach (BlobData b in moving)
             {
                 Vector2 nextPos = b.position + dir;
 
+                if(b is PlayerData player)
+                {
+                    seen.Add(player);
+                }
 
                 if (checkFree(nextPos, moving) == false)
                 {
@@ -177,26 +223,23 @@ public class LevelController : TileMap
                     break;
                 }
             }
-        }
 
-        if (canMove)
-        {
-            foreach(BlobData b in moving)
+            if (canMove)
             {
-                if (b.element != BlobElement.ICE)
+                foreach(BlobData b in moving)
                 {
                     Tile tile = getTile(b.position);
-                    if (tile.entity == b)
+                    if(tile.entity == b)
                         tile.entity = null;
                     Vector2 nextPos = b.position + dir;
                     b.position = nextPos;
                     getTile(b.position).entity = b;
                     ((Blob)entityNodes[b]).Move(dir);
+
+                    //b.move(nextPos);
+
+                    //attachNeighbors(nextPos);
                 }
-
-                //b.move(nextPos);
-
-                //attachNeighbors(nextPos);
             }
         }
 
@@ -215,9 +258,9 @@ public class LevelController : TileMap
                 entityNodes.Remove(entity);
                 entities.Remove(entity);
 
-                if(entity == player)
+                if(entity is PlayerData player && players.Contains(player))
                 {
-                    player = null;
+                    players.Remove(player);
                 }
             }
         }
