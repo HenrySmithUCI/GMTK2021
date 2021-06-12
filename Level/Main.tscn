@@ -141,16 +141,18 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 margin_left = -38.0
-margin_top = -70.0
-margin_right = 38.0
-margin_bottom = -22.0
+margin_top = -71.0
+margin_right = 32.0
+margin_bottom = -23.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Play" type="Button" parent="VBoxContainer"]
-margin_right = 76.0
+margin_right = 70.0
 margin_bottom = 22.0
+focus_neighbour_top = NodePath("../Quit")
+focus_neighbour_bottom = NodePath("../Quit")
 text = "Play"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -158,8 +160,10 @@ __meta__ = {
 
 [node name="Quit" type="Button" parent="VBoxContainer"]
 margin_top = 26.0
-margin_right = 76.0
+margin_right = 70.0
 margin_bottom = 48.0
+focus_neighbour_top = NodePath("../Play")
+focus_neighbour_bottom = NodePath("../Play")
 text = "Quit"
 __meta__ = {
 "_edit_use_anchors_": false
