@@ -80,12 +80,21 @@ public class LevelController : TileMap
                         case BlobElement.ICE:
                             c = 'i';
                             break;
+                        case BlobElement.BOX_BURNING:
+                            c = ']';
+                            break;
+                        case BlobElement.GRASS_BURNING:
+                            c ='[';
+                            break;
+                        case BlobElement.NEW_ICE:
+                            c ='\\';
+                            break;
                         default:
                             c = 's';
                             break;
                         
                     }
-                    if(t.entity is PlayerData)
+                    if(t.entity.isPlayer)
                     {
                         c = char.ToUpper(c);
                     }
