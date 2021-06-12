@@ -273,7 +273,8 @@ public class LevelController : TileMap
                 if(check != null && seen.Contains(check) == false && check.deathFlag == false 
                    && check.element != BlobElement.ICE
                    && check.element != BlobElement.NEW_ICE
-                   && check.element != BlobElement.BOX_BURNING)
+                   && check.element != BlobElement.BOX_BURNING
+                   && check.element != BlobElement.BOX_BURNING_INIT)
                 {
                     fronteir.Add(check);
                     seen.Add(check);
@@ -301,7 +302,7 @@ public class LevelController : TileMap
 
             foreach (BlobData b in moving)
             {
-                if (b.element != BlobElement.ICE && b.element != BlobElement.NEW_ICE && b.element != BlobElement.BOX_BURNING)
+                if (b.element != BlobElement.ICE && b.element != BlobElement.NEW_ICE && b.element != BlobElement.BOX_BURNING && b.element != BlobElement.BOX_BURNING_INIT)
                 {
                     Vector2 nextPos = b.position + dir;
 
@@ -322,7 +323,7 @@ public class LevelController : TileMap
             {
                 foreach(BlobData b in moving)
                 {
-                    if (b.element != BlobElement.ICE && b.element != BlobElement.NEW_ICE && b.element != BlobElement.BOX_BURNING)
+                    if (b.element != BlobElement.ICE && b.element != BlobElement.NEW_ICE && b.element != BlobElement.BOX_BURNING && b.element != BlobElement.BOX_BURNING_INIT)
                     {
                         Tile tile = getTile(b.position);
                         if (tile.entity == b)
@@ -376,7 +377,7 @@ public class LevelController : TileMap
         {
             if(tile.entity is BlobData blob)
             {
-                return active.Contains(blob) && blob.element != BlobElement.ICE && blob.element != BlobElement.NEW_ICE && blob.element != BlobElement.BOX_BURNING;
+                return active.Contains(blob) && blob.element != BlobElement.ICE && blob.element != BlobElement.NEW_ICE && blob.element != BlobElement.BOX_BURNING && blob.element != BlobElement.BOX_BURNING_INIT;
             }
         }
         return true;
