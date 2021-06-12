@@ -14,6 +14,7 @@ public class LevelController : TileMap
     public int turnNumber = 0;
     public List<string> undoList = new List<string>();
     public string currentLevel;
+    public float undoTimer = 0.5f;
 
     // player is always entities[0]
     //public BoxData[] entities;
@@ -89,6 +90,12 @@ public class LevelController : TileMap
                         case BlobElement.NEW_ICE:
                             c ='\\';
                             break;
+                        case BlobElement.BOX_BURNING_INIT:
+                            c='~';
+                            break;
+                        case BlobElement.GRASS_BURNING_INIT:
+                            c='`';
+                            break;
                         default:
                             c = 's';
                             break;
@@ -136,6 +143,11 @@ public class LevelController : TileMap
                     case 's':
                     case 'i':
                     case 'b':
+                    case ']':
+                    case '[':
+                    case '\\':
+                    case '`':
+                    case '~':
                         entities.Add(new BlobData(new Vector2(x,y), charToElement(c)));
                         tiles[x,y] = new Tile(false);
                         if(newLevel)
@@ -213,6 +225,16 @@ public class LevelController : TileMap
                 return BlobElement.ICE;
             case 'b':
                 return BlobElement.BOX;
+            case ']':
+                return BlobElement.BOX_BURNING;
+            case '[':
+                return BlobElement.GRASS_BURNING;
+            case '\\':
+                return BlobElement.NEW_ICE;
+            case '~':
+                return BlobElement.BOX_BURNING_INIT;
+            case '`':
+                return BlobElement.GRASS_BURNING_INIT;
             default:
                 return BlobElement.STONE;
         }
@@ -254,6 +276,19 @@ public class LevelController : TileMap
         {
             undo();
         }
+        if(Input.IsActionPressed("undo"))
+        {
+            undoTimer -= delta;
+            if(undoTimer <= 0)
+            {
+                undo();
+                undoTimer += 0.1f;
+            }
+        }
+        else
+        {
+            undoTimer = 0.5f;
+        }
         if(Input.IsActionJustPressed("restart"))
         {
             turnNumber = 0;
@@ -294,7 +329,7 @@ public class LevelController : TileMap
     }
 
     // should handle combining, only handles player movement atm
-    private void move(Vector2 dir)
+    protected void move(Vector2 dir)
     {
         turnNumber += 1;
 

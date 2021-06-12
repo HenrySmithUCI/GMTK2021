@@ -20,6 +20,9 @@ public class LevelSelect : Control
     {
         switch(num)
         {
+            case -1:
+                GetTree().ChangeScene("res://Level/LevelMake.tscn");
+                break;
             case 0:
                 GetTree().ChangeScene("res://Level/Main.tscn");
                 break;

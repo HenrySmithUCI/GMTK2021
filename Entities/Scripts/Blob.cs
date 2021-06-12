@@ -19,8 +19,7 @@ public class Blob : Node2D
     {
         sprite = GetNode<Sprite>("Sprite");
         particles = GetNode<Particles2D>("Particles");
-        SetTexture((int)data.element);
-        SetParticles((int)data.element);
+        ChangeElement(data.element);
         Position = data.position * 16;
     }
 
@@ -32,10 +31,12 @@ public class Blob : Node2D
         {
             case BlobElement.BOX_BURNING_INIT:
             case BlobElement.BOX_BURNING:
+                SetTexture((int)BlobElement.BOX);
                 SetParticles((int)BlobElement.FIRE);
                 break;
             case BlobElement.GRASS_BURNING_INIT:
             case BlobElement.GRASS_BURNING:
+                SetTexture((int)BlobElement.GRASS);
                 SetParticles((int)BlobElement.FIRE);
                 break;
             case BlobElement.NEW_ICE:

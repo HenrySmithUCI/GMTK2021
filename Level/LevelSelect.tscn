@@ -161,9 +161,9 @@ focus_neighbour_top = NodePath("../Button5")
 focus_neighbour_right = NodePath("../Button6")
 focus_neighbour_bottom = NodePath("../Button5")
 text = "10"
-[connection signal="pressed" from="BackButton" to="." method="changeLevel" binds= [ 0 ]]
-[connection signal="pressed" from="BackButton2" to="." method="changeLevel" binds= [ 0 ]]
-[connection signal="pressed" from="GridContainer/Button1" to="." method="changeLevel" binds= [ 1 ]]
+[connection signal="pressed" from="Back" to="." method="changeLevel" binds= [ 0 ]]
+[connection signal="pressed" from="Custom" to="." method="changeLevel" binds= [ -1 ]]
+[connection signal="pressed" from="GridContainer/Button" to="." method="changeLevel" binds= [ 1 ]]
 [connection signal="pressed" from="GridContainer/Button2" to="." method="changeLevel" binds= [ 2 ]]
 [connection signal="pressed" from="GridContainer/Button3" to="." method="changeLevel" binds= [ 3 ]]
 [connection signal="pressed" from="GridContainer/Button4" to="." method="changeLevel" binds= [ 4 ]]
