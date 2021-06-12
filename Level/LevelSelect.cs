@@ -3,6 +3,11 @@ using System;
 
 public class LevelSelect : Control
 {
+    public override void _Ready()
+    {
+        GetNode<GridContainer>("GridContainer").GetNode<Button>("Button1").GrabFocus();
+    }
+
     public override void _Process(float delta)
     {
         if(Input.IsActionJustPressed("menu"))
