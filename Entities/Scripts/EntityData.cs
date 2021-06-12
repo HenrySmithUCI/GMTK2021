@@ -77,7 +77,7 @@ public class BlobData : EntityData
             case BlobElement.WATER:
                 if(neighborElements.Contains(BlobElement.ICE))
                 {
-                    level.entityNodes[this].Call("ChangeElement", BlobElement.ICE);
+                    level.entityNodes[this].Call("ChangeElement", BlobElement.NEW_ICE);
 
                     if(level.players.Contains(this))
                     {
@@ -86,12 +86,12 @@ public class BlobData : EntityData
                 }
                 break;
             case BlobElement.GRASS:
-                if(neighborElements.Contains(BlobElement.FIRE))
+                if(neighborElements.Contains(BlobElement.FIRE) || neighborElements.Contains(BlobElement.BOX_BURNING) || neighborElements.Contains(BlobElement.GRASS_BURNING))
                 {
                     if(deathTimer < 0)
                     {
                         deathTimer = 2;
-                        level.entityNodes[this].Call("SetParticles", BlobElement.FIRE);
+                        level.entityNodes[this].Call("ChangeElement", BlobElement.GRASS_BURNING);
                     }
                 }
                 if (neighborElements.Contains(BlobElement.WATER))
@@ -100,8 +100,15 @@ public class BlobData : EntityData
                     level.entityNodes[this].Call("SetParticles", BlobElement.GRASS);
                 }
                 break;
+            case BlobElement.GRASS_BURNING:
+                if (neighborElements.Contains(BlobElement.WATER))
+                {
+                    deathTimer = -1;
+                    level.entityNodes[this].Call("SetParticles", BlobElement.GRASS);
+                }
+                break;
             case BlobElement.BOX:
-                if (neighborElements.Contains(BlobElement.FIRE) || neighborElements.Contains(BlobElement.BOX_BURNING))
+                if (neighborElements.Contains(BlobElement.FIRE) || neighborElements.Contains(BlobElement.BOX_BURNING) || neighborElements.Contains(BlobElement.GRASS_BURNING))
                 {
                     if (deathTimer < 0)
                     {
@@ -109,17 +116,21 @@ public class BlobData : EntityData
                         level.entityNodes[this].Call("ChangeElement", BlobElement.BOX_BURNING);
                     }
                 }
-
-                if (neighborElements.Contains(BlobElement.WATER))
-                {
-                    deathTimer = -1;
-                    level.entityNodes[this].Call("SetParticles", BlobElement.BOX);
-                }
                 break;
             case BlobElement.ICE:
                 if (neighborElements.Contains(BlobElement.FIRE))
                 {
                     level.entityNodes[this].Call("ChangeElement", BlobElement.WATER);
+                }
+                break;
+            case BlobElement.NEW_ICE:
+                if (neighborElements.Contains(BlobElement.FIRE))
+                {
+                    level.entityNodes[this].Call("ChangeElement", BlobElement.WATER);
+                }
+                else
+                {
+                    level.entityNodes[this].Call("ChangeElement", BlobElement.ICE);
                 }
                 break;
             case BlobElement.BOX_BURNING:
@@ -138,7 +149,7 @@ public class BlobData : EntityData
     }
 }
 
-public enum BlobElement {STONE, FIRE, WATER, GRASS, BOX, ICE, BOX_BURNING}
+public enum BlobElement {STONE, FIRE, WATER, GRASS, BOX, ICE, BOX_BURNING, GRASS_BURNING, NEW_ICE}
 public enum Direction {UP, RIGHT, DOWN, LEFT}
 
 

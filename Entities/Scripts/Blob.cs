@@ -28,26 +28,33 @@ public class Blob : Node2D
     {
         data.element = element;
 
-        if (element is BlobElement.ICE)
-            data.isPlayer = false;
-
-        if (element != BlobElement.BOX_BURNING)
+        switch (element)
         {
-            SetTexture((int)element);
-            SetParticles((int)element);
-        }
-        else
-        {
-            SetParticles((int)BlobElement.FIRE);
+            case BlobElement.BOX_BURNING:
+                SetParticles((int)BlobElement.FIRE);
+                break;
+            case BlobElement.GRASS_BURNING:
+                SetParticles((int)BlobElement.FIRE);
+                break;
+            case BlobElement.NEW_ICE:
+            case BlobElement.ICE:
+                data.isPlayer = false;
+                SetTexture((int)BlobElement.ICE);
+                SetParticles((int)BlobElement.ICE);
+                break;
+            default:
+                SetTexture((int)element);
+                SetParticles((int)element);
+                break;
         }
     }
     
     public void SetTexture(int elementId)
     {
         if(data.isPlayer)
-            sprite.Texture = playerElementTextures[(int)data.element];
+            sprite.Texture = playerElementTextures[elementId];
         else
-            sprite.Texture = elementTextures[(int)data.element];
+            sprite.Texture = elementTextures[elementId];
     }
 
     public void SetParticles(int elementId)

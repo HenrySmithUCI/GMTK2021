@@ -169,7 +169,10 @@ public class LevelController : TileMap
             connected.Add(data);
             foreach(BlobData check in data.connected)
             {
-                if(check != null && seen.Contains(check) == false && check.deathFlag == false && check.element != BlobElement.ICE)
+                if(check != null && seen.Contains(check) == false && check.deathFlag == false 
+                   && check.element != BlobElement.ICE
+                   && check.element != BlobElement.NEW_ICE
+                   && check.element != BlobElement.BOX_BURNING)
                 {
                     fronteir.Add(check);
                     seen.Add(check);
@@ -196,7 +199,7 @@ public class LevelController : TileMap
 
             foreach (BlobData b in moving)
             {
-                if (b.element != BlobElement.ICE)
+                if (b.element != BlobElement.ICE && b.element != BlobElement.NEW_ICE && b.element != BlobElement.BOX_BURNING)
                 {
                     Vector2 nextPos = b.position + dir;
 
@@ -217,7 +220,7 @@ public class LevelController : TileMap
             {
                 foreach(BlobData b in moving)
                 {
-                    if (b.element != BlobElement.ICE)
+                    if (b.element != BlobElement.ICE && b.element != BlobElement.NEW_ICE && b.element != BlobElement.BOX_BURNING)
                     {
                         Tile tile = getTile(b.position);
                         if (tile.entity == b)
@@ -266,7 +269,7 @@ public class LevelController : TileMap
         {
             if(tile.entity is BlobData blob)
             {
-                return active.Contains(blob) && blob.element != BlobElement.ICE;
+                return active.Contains(blob) && blob.element != BlobElement.ICE && blob.element != BlobElement.NEW_ICE && blob.element != BlobElement.BOX_BURNING;
             }
         }
         return true;
