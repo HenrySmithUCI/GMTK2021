@@ -347,6 +347,11 @@ public class LevelController : TileMap
 
         foreach(EntityData entity in entities)
         {
+            entity.PreUpdate();
+        }
+
+        foreach(EntityData entity in entities)
+        {
             entity.UpdateTurn();
         }
 
