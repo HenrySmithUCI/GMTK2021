@@ -5,7 +5,7 @@ public class Main : Control
 {
     public void switchToPlay()
     {
-        GetTree().ChangeScene("res://Ian/LevelOne.tscn");
+        GetTree().ChangeScene("res://Ian/LevelSelect.tscn");
     }
 
     public void quit()

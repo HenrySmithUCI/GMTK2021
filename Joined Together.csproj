@@ -61,6 +61,7 @@
     <Compile Include="Ian\Box.cs" />
     <Compile Include="Ian\BoxData.cs" />
     <Compile Include="Ian\LevelController.cs" />
+    <Compile Include="Ian\LevelSelect.cs" />
     <Compile Include="Ian\LevelTemplate.cs" />
     <Compile Include="Ian\Main.cs" />
   </ItemGroup>

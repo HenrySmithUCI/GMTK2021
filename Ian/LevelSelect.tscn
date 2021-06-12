@@ -1,0 +1,115 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Ian/LevelSelect.cs" type="Script" id=1]
+
+[node name="LevelSelect" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="."]
+margin_left = 10.4283
+margin_top = 565.333
+margin_right = 80.0
+margin_bottom = 585.333
+text = "Back"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -478.0
+margin_top = -551.0
+margin_right = 478.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_right = 956.0
+margin_bottom = 20.0
+alignment = 1
+
+[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 325.0
+margin_right = 383.0
+margin_bottom = 20.0
+text = "Level 1"
+
+[node name="Button2" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 387.0
+margin_right = 445.0
+margin_bottom = 20.0
+text = "Level 2"
+
+[node name="Button3" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 449.0
+margin_right = 507.0
+margin_bottom = 20.0
+text = "Level 3"
+
+[node name="Button4" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 511.0
+margin_right = 569.0
+margin_bottom = 20.0
+text = "Level 4"
+
+[node name="Button5" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 573.0
+margin_right = 631.0
+margin_bottom = 20.0
+text = "Level 5"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 24.0
+margin_right = 956.0
+margin_bottom = 44.0
+alignment = 1
+
+[node name="Button6" type="Button" parent="VBoxContainer/HBoxContainer2"]
+margin_left = 321.0
+margin_right = 379.0
+margin_bottom = 20.0
+text = "Level 6"
+
+[node name="Button7" type="Button" parent="VBoxContainer/HBoxContainer2"]
+margin_left = 383.0
+margin_right = 441.0
+margin_bottom = 20.0
+text = "Level 7"
+
+[node name="Button8" type="Button" parent="VBoxContainer/HBoxContainer2"]
+margin_left = 445.0
+margin_right = 503.0
+margin_bottom = 20.0
+text = "Level 8"
+
+[node name="Button9" type="Button" parent="VBoxContainer/HBoxContainer2"]
+margin_left = 507.0
+margin_right = 565.0
+margin_bottom = 20.0
+text = "Level 9"
+
+[node name="Button10" type="Button" parent="VBoxContainer/HBoxContainer2"]
+margin_left = 569.0
+margin_right = 635.0
+margin_bottom = 20.0
+text = "Level 10"
+[connection signal="pressed" from="Button" to="." method="changeLevel" binds= [ 0 ]]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Button" to="." method="changeLevel" binds= [ 1 ]]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Button2" to="." method="changeLevel" binds= [ 2 ]]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Button3" to="." method="changeLevel" binds= [ 3 ]]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Button4" to="." method="changeLevel" binds= [ 4 ]]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Button5" to="." method="changeLevel" binds= [ 5 ]]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/Button6" to="." method="changeLevel" binds= [ 6 ]]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/Button7" to="." method="changeLevel" binds= [ 7 ]]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/Button8" to="." method="changeLevel" binds= [ 8 ]]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/Button9" to="." method="changeLevel" binds= [ 9 ]]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/Button10" to="." method="changeLevel" binds= [ 10 ]]
