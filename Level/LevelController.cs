@@ -12,6 +12,8 @@ public class LevelController : TileMap
     public Dictionary<EntityData, Node2D> entityNodes;
     public List<BlobData> players;
     public int turnNumber = 0;
+    public List<string> undoList = new List<string>();
+    public string currentLevel;
 
     // player is always entities[0]
     //public BoxData[] entities;
@@ -24,7 +26,77 @@ public class LevelController : TileMap
     public int width = 20;
     public int height = 11;
 
-    protected void setUpLevel(string levelString)
+    public void destroyLevel()
+    {
+        foreach(var key in entityNodes)
+        {
+            key.Value.QueueFree();
+        }
+    }
+
+    public void undo()
+    {
+        if(turnNumber == 0)
+            return;
+        turnNumber -= 1;
+        destroyLevel();
+        setUpLevel(undoList[0], false);
+        undoList.RemoveAt(0);
+    }
+
+    public string levelToString()
+    {
+        string ret = "";
+        for(int y = 0; y < height; ++y)
+        {
+            for(int x = 0; x < width; ++x)
+            {
+                Tile t = getTile(new Vector2(x,y));
+                if(t.isBlock)
+                    ret += "0";
+                else if(t.entity == null)
+                    ret += " ";
+                else
+                {
+                    BlobData blob = (BlobData)t.entity;
+                    char c;
+                    switch(blob.element)
+                    {
+                        case BlobElement.BOX:
+                            c = 'b';
+                            break;
+                        case BlobElement.FIRE:
+                            c = 'f';
+                            break;
+                        case BlobElement.WATER:
+                            c = 'w';
+                            break;
+                        case BlobElement.STONE:
+                            c = 's';
+                            break;
+                        case BlobElement.GRASS:
+                            c = 'g';
+                            break;
+                        case BlobElement.ICE:
+                            c = 'i';
+                            break;
+                        default:
+                            c = 's';
+                            break;
+                        
+                    }
+                    if(t.entity is PlayerData)
+                    {
+                        c = char.ToUpper(c);
+                    }
+                    ret += c;
+                }
+            }
+        }
+        return ret;
+    }
+
+    protected void setUpLevel(string levelString, bool newLevel = true)
     {
         tiles = new Tile[width, height];
         entityNodes = new Dictionary<EntityData, Node2D>();
@@ -41,11 +113,13 @@ public class LevelController : TileMap
                 {
                     case ' ':
                         tiles[x,y] = new Tile(false);
-                        SetCell(x, y, 0);
+                        if(newLevel)
+                            SetCell(x, y, 0);
                     break;
                     case '0':
                         tiles[x,y] = new Tile(true);
-                        SetCell(x, y, 1);
+                        if(newLevel)
+                            SetCell(x, y, 1);
                         break;
                     case 'g':
                     case 'w':
@@ -55,7 +129,8 @@ public class LevelController : TileMap
                     case 'b':
                         entities.Add(new BlobData(new Vector2(x,y), charToElement(c)));
                         tiles[x,y] = new Tile(false);
-                        SetCell(x, y, 0);
+                        if(newLevel)
+                            SetCell(x, y, 0);
                         break;
                     case 'G':
                     case 'W':
@@ -63,22 +138,27 @@ public class LevelController : TileMap
                     case 'S':
                         entities.Add(new BlobData(new Vector2(x,y), charToElement(char.ToLower(c)), true));
                         tiles[x,y] = new Tile(false);
-                        SetCell(x, y, 0);
+                        if(newLevel)
+                            SetCell(x, y, 0);
                         break;
                 }
             }
         }
-        for(int i = -1; i <= width; ++i)
+        if(newLevel)
         {
-            SetCell(i, -1, 1);
-            SetCell(i, height,1);
+            for(int i = -1; i <= width; ++i)
+            {
+                SetCell(i, -1, 1);
+                SetCell(i, height,1);
+            }
+            for(int j = -1; j <= height; ++j)
+            {
+                SetCell(-1, j,1);
+                SetCell(width, j,1);
+            }
         }
-        for(int j = -1; j <= height; ++j)
-        {
-            SetCell(-1, j,1);
-            SetCell(width, j,1);
-        }
-        UpdateBitmaskRegion();
+        if(newLevel)
+            UpdateBitmaskRegion();
 
         foreach(var entity in entities)
         {
@@ -100,6 +180,11 @@ public class LevelController : TileMap
                 entityNodes[entity] = blob;
             }
             getTile(entity.position).entity = entity;
+        }
+		
+		foreach(EntityData entity in entities)
+        {
+            entity.UpdateTurn();
         }
     }
 
@@ -155,6 +240,22 @@ public class LevelController : TileMap
                 move(new Vector2(0, 1));
             }
         }
+
+        if(Input.IsActionJustPressed("undo"))
+        {
+            undo();
+        }
+        if(Input.IsActionJustPressed("restart"))
+        {
+            turnNumber = 0;
+            destroyLevel();
+            setUpLevel(currentLevel, false);
+            undoList = new List<string>();
+        }
+        if(Input.IsActionJustPressed("menu"))
+        {
+            GetTree().ChangeScene("res://Level/LevelSelect.tscn");
+        }
     }
 
     private HashSet<BlobData> getActiveBlobs(int i)
@@ -187,6 +288,7 @@ public class LevelController : TileMap
     {
         turnNumber += 1;
 
+		undoList.Insert(0, levelToString());
         HashSet<BlobData> seen = new HashSet<BlobData>();
 
         for(int i = 0; i < players.Count; ++i)
