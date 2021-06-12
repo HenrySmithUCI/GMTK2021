@@ -5,14 +5,12 @@ using System.Collections.Generic;
 public class LevelController : TileMap
 {
     [Export]
-    public PackedScene playerScene = null;
-    [Export]
     public PackedScene blobScene = null;
 
     public Tile[,] tiles;
     public List<EntityData> entities;
     public Dictionary<EntityData, Node2D> entityNodes;
-    public List<PlayerData> players;
+    public List<BlobData> players;
     public int turnNumber = 0;
     public List<string> undoList = new List<string>();
     public string currentLevel;
@@ -103,7 +101,7 @@ public class LevelController : TileMap
         tiles = new Tile[width, height];
         entityNodes = new Dictionary<EntityData, Node2D>();
         entities = new List<EntityData>();
-        players = new List<PlayerData>();
+        players = new List<BlobData>();
 
         // turn info from walls into auto tile map
         for(int y = 0; y < height; y++)
@@ -127,6 +125,8 @@ public class LevelController : TileMap
                     case 'w':
                     case 'f':
                     case 's':
+                    case 'i':
+                    case 'b':
                         entities.Add(new BlobData(new Vector2(x,y), charToElement(c)));
                         tiles[x,y] = new Tile(false);
                         if(newLevel)
@@ -136,15 +136,11 @@ public class LevelController : TileMap
                     case 'W':
                     case 'F':
                     case 'S':
-                        entities.Add(new PlayerData(new Vector2(x,y), charToElement(char.ToLower(c))));
+                        entities.Add(new BlobData(new Vector2(x,y), charToElement(char.ToLower(c)), true));
                         tiles[x,y] = new Tile(false);
                         if(newLevel)
                             SetCell(x, y, 0);
                         break;
-                    case 'i':
-                    break;
-                    case 'b':
-                    break;
                 }
             }
         }
@@ -170,10 +166,10 @@ public class LevelController : TileMap
             if(entity is BlobData bl)
             {
                 Blob blob;
-                if(entity is PlayerData p)
+                if(bl.isPlayer)
                 {
-                    players.Add(p);
-                    blob = (Blob)playerScene.Instance();
+                    players.Add(bl);
+                    blob = (Blob)blobScene.Instance();
                 }
                 else
                 {
@@ -185,25 +181,11 @@ public class LevelController : TileMap
             }
             getTile(entity.position).entity = entity;
         }
-
-        foreach(EntityData entity in entities)
+		
+		foreach(EntityData entity in entities)
         {
             entity.UpdateTurn();
         }
-
-        /*
-        // turn info from entities into sprites on map
-        foreach (var b in entities)
-        {
-            Box box = (Box)boxScene.Instance();
-            box.setTexture(b.id);
-            box.GlobalPosition = (b.position * gridSize).Snapped(new Vector2(gridSize, gridSize));
-            AddChild(box);
-            b.box = box;
-        }
-
-        active.Add(entities[0]);
-        */
     }
 
     public BlobElement charToElement(char type)
@@ -218,6 +200,10 @@ public class LevelController : TileMap
                 return BlobElement.GRASS;
             case 's':
                 return BlobElement.STONE;
+            case 'i':
+                return BlobElement.ICE;
+            case 'b':
+                return BlobElement.BOX;
             default:
                 return BlobElement.STONE;
         }
@@ -284,7 +270,10 @@ public class LevelController : TileMap
             connected.Add(data);
             foreach(BlobData check in data.connected)
             {
-                if(check != null && seen.Contains(check) == false && check.deathFlag == false)
+                if(check != null && seen.Contains(check) == false && check.deathFlag == false 
+                   && check.element != BlobElement.ICE
+                   && check.element != BlobElement.NEW_ICE
+                   && check.element != BlobElement.BOX_BURNING)
                 {
                     fronteir.Add(check);
                     seen.Add(check);
@@ -299,9 +288,8 @@ public class LevelController : TileMap
     {
         turnNumber += 1;
 
-        undoList.Insert(0, levelToString());
-
-        HashSet<PlayerData> seen = new HashSet<PlayerData>();
+		undoList.Insert(0, levelToString());
+        HashSet<BlobData> seen = new HashSet<BlobData>();
 
         for(int i = 0; i < players.Count; ++i)
         {
@@ -313,17 +301,20 @@ public class LevelController : TileMap
 
             foreach (BlobData b in moving)
             {
-                Vector2 nextPos = b.position + dir;
-
-                if(b is PlayerData player)
+                if (b.element != BlobElement.ICE && b.element != BlobElement.NEW_ICE && b.element != BlobElement.BOX_BURNING)
                 {
-                    seen.Add(player);
-                }
+                    Vector2 nextPos = b.position + dir;
 
-                if (checkFree(nextPos, moving) == false)
-                {
-                    canMove = false;
-                    break;
+                    if (b.isPlayer)
+                    {
+                        seen.Add(b);
+                    }
+
+                    if (checkFree(nextPos, moving) == false)
+                    {
+                        canMove = false;
+                        break;
+                    }
                 }
             }
 
@@ -331,17 +322,16 @@ public class LevelController : TileMap
             {
                 foreach(BlobData b in moving)
                 {
-                    Tile tile = getTile(b.position);
-                    if(tile.entity == b)
-                        tile.entity = null;
-                    Vector2 nextPos = b.position + dir;
-                    b.position = nextPos;
-                    getTile(b.position).entity = b;
-                    ((Blob)entityNodes[b]).Move(dir);
-
-                    //b.move(nextPos);
-
-                    //attachNeighbors(nextPos);
+                    if (b.element != BlobElement.ICE && b.element != BlobElement.NEW_ICE && b.element != BlobElement.BOX_BURNING)
+                    {
+                        Tile tile = getTile(b.position);
+                        if (tile.entity == b)
+                            tile.entity = null;
+                        Vector2 nextPos = b.position + dir;
+                        b.position = nextPos;
+                        getTile(b.position).entity = b;
+                        ((Blob)entityNodes[b]).Move(dir);
+                    }
                 }
             }
         }
@@ -361,9 +351,9 @@ public class LevelController : TileMap
                 entityNodes.Remove(entity);
                 entities.Remove(entity);
 
-                if(entity is PlayerData player && players.Contains(player))
+                if(entity.isPlayer && players.Contains((BlobData)entity))
                 {
-                    players.Remove(player);
+                    players.Remove((BlobData)entity);
                 }
             }
         }
@@ -374,13 +364,6 @@ public class LevelController : TileMap
     // returns false if a wall or entity IS in the tile
     private bool checkFree(Vector2 pos, HashSet<BlobData> active)
     {
-        // if move outside of bounds of level
-        //if(pos.x >= walls.GetLength(0) || pos.y >= walls.GetLength(1) ||
-        //   pos.x < 0 || pos.y < 0)
-        //{
-        //    return false;
-        //}
-
         Tile tile = getTile(pos);
         if(tile == null || tile.isBlock)
             return false;
@@ -388,30 +371,9 @@ public class LevelController : TileMap
         {
             if(tile.entity is BlobData blob)
             {
-                return active.Contains(blob);
+                return active.Contains(blob) && blob.element != BlobElement.ICE && blob.element != BlobElement.NEW_ICE && blob.element != BlobElement.BOX_BURNING;
             }
         }
         return true;
-
-        // if there is an entity in the way
-        //for(int i = 0; i < entities.Length; i++)
-        //{
-        //    if(entities[i].position == pos && !active.Contains(entities[i]))
-        //    {
-        //        return false;
-        //    }
-        //}
-    }
-
-    // attach any neighbors to active
-    private void attachNeighbors(Vector2 pos)
-    {
-        //foreach(BoxData b in entities)
-        //{
-        //    if(b.position.DistanceTo(pos) < 1.1f && !active.Contains(b))
-        //    {
-        //        active.Add(b);
-        //    }
-        //}
     }
 }

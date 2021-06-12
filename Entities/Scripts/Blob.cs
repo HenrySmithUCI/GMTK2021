@@ -6,6 +6,8 @@ public class Blob : Node2D
     [Export]
     public Texture[] elementTextures;
     [Export]
+    public Texture[] playerElementTextures;
+    [Export]
     public Texture[] elementParticles;
     
     public BlobData data;
@@ -17,11 +19,44 @@ public class Blob : Node2D
     {
         sprite = GetNode<Sprite>("Sprite");
         particles = GetNode<Particles2D>("Particles");
-        sprite.Texture = elementTextures[(int)data.element];
+        SetTexture((int)data.element);
         SetParticles((int)data.element);
         Position = data.position * 16;
     }
+
+    public void ChangeElement(BlobElement element)
+    {
+        data.element = element;
+
+        switch (element)
+        {
+            case BlobElement.BOX_BURNING:
+                SetParticles((int)BlobElement.FIRE);
+                break;
+            case BlobElement.GRASS_BURNING:
+                SetParticles((int)BlobElement.FIRE);
+                break;
+            case BlobElement.NEW_ICE:
+            case BlobElement.ICE:
+                data.isPlayer = false;
+                SetTexture((int)BlobElement.ICE);
+                SetParticles((int)BlobElement.ICE);
+                break;
+            default:
+                SetTexture((int)element);
+                SetParticles((int)element);
+                break;
+        }
+    }
     
+    public void SetTexture(int elementId)
+    {
+        if(data.isPlayer)
+            sprite.Texture = playerElementTextures[elementId];
+        else
+            sprite.Texture = elementTextures[elementId];
+    }
+
     public void SetParticles(int elementId)
     {
         if (data.element != BlobElement.STONE)
