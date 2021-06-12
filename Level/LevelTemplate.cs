@@ -15,13 +15,13 @@ public class LevelTemplate : LevelController
     {
         string level = 
 "00000000000000000000" +
-"0                  0" +
-"0                  0" +
-"0   gg     00      0" +
+"0      b           0" +
+"0        i         0" +
+"0   wg      00     0" +
 "0           0      0" +
-"0   F  w           0" +
+"0   W  w       F   0" +
 "0                  0" +
-"0   s       W      0" +
+"0   s  f    w      0" +
 "0                  0" +
 "0                  0" +
 "00000000000000000000";
