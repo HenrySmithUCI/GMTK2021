@@ -17,11 +17,16 @@ public class Blob : Node2D
     {
         sprite = GetNode<Sprite>("Sprite");
         particles = GetNode<Particles2D>("Particles");
-        sprite.Texture = elementTextures[(int)data.element];
+        SetTexture((int)data.element);
         SetParticles((int)data.element);
         Position = data.position * 16;
     }
     
+    public void SetTexture(int elementId)
+    {
+        sprite.Texture = elementTextures[(int)data.element];
+    }
+
     public void SetParticles(int elementId)
     {
         if (data.element != BlobElement.STONE)

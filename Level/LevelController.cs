@@ -166,13 +166,16 @@ public class LevelController : TileMap
 
         foreach (BlobData b in moving)
         {
-            Vector2 nextPos = b.position + dir;
-
-
-            if (checkFree(nextPos, moving) == false)
+            if (b.element != BlobElement.ICE)
             {
-                canMove = false;
-                break;
+                Vector2 nextPos = b.position + dir;
+
+
+                if (checkFree(nextPos, moving) == false)
+                {
+                    canMove = false;
+                    break;
+                }
             }
         }
 
@@ -180,13 +183,16 @@ public class LevelController : TileMap
         {
             foreach(BlobData b in moving)
             {
-                Tile tile = getTile(b.position);
-                if(tile.entity == b)
-                    tile.entity = null;
-                Vector2 nextPos = b.position + dir;
-                b.position = nextPos;
-                getTile(b.position).entity = b;
-                ((Blob)entityNodes[b]).Move(dir);
+                if (b.element != BlobElement.ICE)
+                {
+                    Tile tile = getTile(b.position);
+                    if (tile.entity == b)
+                        tile.entity = null;
+                    Vector2 nextPos = b.position + dir;
+                    b.position = nextPos;
+                    getTile(b.position).entity = b;
+                    ((Blob)entityNodes[b]).Move(dir);
+                }
 
                 //b.move(nextPos);
 
@@ -236,7 +242,7 @@ public class LevelController : TileMap
         {
             if(tile.entity is BlobData blob)
             {
-                return active.Contains(blob);
+                return active.Contains(blob) && blob.element != BlobElement.ICE;
             }
         }
         return true;

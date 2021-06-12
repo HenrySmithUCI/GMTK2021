@@ -37,7 +37,8 @@ public class BlobData : EntityData
         for(int i = 0; i < 4; ++i)
         {
             Tile tile = level.getTile(position + dirs[i]);
-            if(tile != null && tile.entity != null && tile.entity is BlobData blob && ((BlobData)tile.entity).element != BlobElement.BOX)
+            if(tile != null && tile.entity != null && tile.entity is BlobData blob 
+               && ((BlobData)tile.entity).element != BlobElement.BOX)
                 connected[i] = blob;
             else
                 connected[i] = null;
@@ -71,6 +72,13 @@ public class BlobData : EntityData
                 }
                 break;
             case BlobElement.WATER:
+                if(neighborElements.Contains(BlobElement.ICE))
+                {
+                    element = BlobElement.ICE;
+                    level.entityNodes[this].Call("SetTexture", BlobElement.ICE);
+                    level.entityNodes[this].Call("SetParticles", BlobElement.ICE);
+                    GD.Print("h");
+                }
                 break;
             case BlobElement.GRASS:
                 if(neighborElements.Contains(BlobElement.FIRE))
@@ -104,6 +112,12 @@ public class BlobData : EntityData
                 }
                 break;
             case BlobElement.ICE:
+                if (neighborElements.Contains(BlobElement.FIRE))
+                {
+                    element = BlobElement.WATER;
+                    level.entityNodes[this].Call("SetTexture", BlobElement.WATER);
+                    level.entityNodes[this].Call("SetParticles", BlobElement.WATER);
+                }
                 break;
         }
 
