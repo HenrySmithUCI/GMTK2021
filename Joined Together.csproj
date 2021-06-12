@@ -64,7 +64,8 @@
     <Compile Include="Ian\BoxData.cs" />
     <Compile Include="Level\LevelController.cs" />
     <Compile Include="Level\LevelTemplate.cs" />
-    <Compile Include="Ian\Main.cs" />
+    <Compile Include="Level\LevelSelect.cs" />
+    <Compile Include="Level\Main.cs" />
     <Compile Include="Level\Tile.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

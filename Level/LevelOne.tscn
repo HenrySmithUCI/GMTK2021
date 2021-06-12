@@ -1,18 +1,17 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Level/LevelTemplate.cs" type="Script" id=1]
 [ext_resource path="res://Level/Tiles.tres" type="TileSet" id=2]
-[ext_resource path="res://Entities/PlayerBlob.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Entities/Blob.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Ian/UI.tscn" type="PackedScene" id=3]
 
 [node name="LevelTemplate" type="TileMap"]
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 16, 16 )
 format = 1
 script = ExtResource( 1 )
-playerScene = ExtResource( 3 )
-blobScene = ExtResource( 4 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
 current = true
+
+[node name="UI" parent="." instance=ExtResource( 3 )]
