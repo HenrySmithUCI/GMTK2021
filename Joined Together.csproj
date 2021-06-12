@@ -60,12 +60,11 @@
     <Compile Include=".prop\AssemblyInfo.cs" />
     <Compile Include="Entities\Scripts\Blob.cs" />
     <Compile Include="Entities\Scripts\EntityData.cs" />
-    <Compile Include="Ian\Box.cs" />
-    <Compile Include="Ian\BoxData.cs" />
     <Compile Include="Level\LevelController.cs" />
     <Compile Include="Level\LevelTemplate.cs" />
-    <Compile Include="Ian\Main.cs" />
     <Compile Include="Level\Tile.cs" />
+    <Compile Include="Level\Main.cs" />
+    <Compile Include="Level\LevelSelect.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

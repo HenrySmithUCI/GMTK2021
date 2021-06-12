@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Level/LevelSelect.cs" type="Script" id=1]
+[ext_resource path="res://Ian/select.png" type="Texture" id=2]
 
 [node name="LevelSelect" type="Control"]
 anchor_right = 1.0
@@ -9,6 +10,11 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_right = 320.0
+margin_bottom = 180.0
+texture = ExtResource( 2 )
 
 [node name="Button" type="Button" parent="."]
 margin_left = 2.57106
@@ -26,9 +32,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 margin_left = -155.758
-margin_top = -97.0033
+margin_top = -118.33
 margin_right = 158.242
-margin_bottom = -53.0033
+margin_bottom = -74.3301
 __meta__ = {
 "_edit_use_anchors_": false
 }
