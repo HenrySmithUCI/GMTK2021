@@ -30,9 +30,11 @@ public class Blob : Node2D
 
         switch (element)
         {
+            case BlobElement.BOX_BURNING_INIT:
             case BlobElement.BOX_BURNING:
                 SetParticles((int)BlobElement.FIRE);
                 break;
+            case BlobElement.GRASS_BURNING_INIT:
             case BlobElement.GRASS_BURNING:
                 SetParticles((int)BlobElement.FIRE);
                 break;

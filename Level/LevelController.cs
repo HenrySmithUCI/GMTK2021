@@ -85,7 +85,7 @@ public class LevelController : TileMap
                             break;
                         
                     }
-                    if(t.entity is PlayerData)
+                    if(t.entity.isPlayer)
                     {
                         c = char.ToUpper(c);
                     }
@@ -334,6 +334,11 @@ public class LevelController : TileMap
                     }
                 }
             }
+        }
+
+        foreach(EntityData entity in entities)
+        {
+            entity.PreUpdate();
         }
 
         foreach(EntityData entity in entities)
