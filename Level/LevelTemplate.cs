@@ -24,6 +24,8 @@ public class LevelTemplate : LevelController
             new BlobData(new Vector2(7,5), BlobElement.FIRE),
             new BlobData(new Vector2(7,7), BlobElement.STONE),
             new BlobData(new Vector2(3,5), BlobElement.WATER),
+            new BlobData(new Vector2(5,7), BlobElement.WATER),
+            new BlobData(new Vector2(9,5), BlobElement.BOX),
         };
 
         setUpLevel(walls);

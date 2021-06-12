@@ -18,17 +18,28 @@ public class Blob : Node2D
         sprite = GetNode<Sprite>("Sprite");
         particles = GetNode<Particles2D>("Particles");
         sprite.Texture = elementTextures[(int)data.element];
-        if(data.element != BlobElement.STONE)
+        SetParticles((int)data.element);
+        Position = data.position * 16;
+    }
+    
+    public void SetParticles(int elementId)
+    {
+        if (data.element != BlobElement.STONE)
         {
             particles.Visible = true;
-            particles.Texture = elementParticles[(int)data.element];
+            particles.Texture = elementParticles[elementId];
         }
-        Position = data.position * 16;
     }
 
     public void Move(Vector2 dir)
     {
         Position = data.position * 16;
+    }
+
+    public void die()
+    {
+
+        QueueFree();
     }
 }
 
