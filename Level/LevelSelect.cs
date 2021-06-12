@@ -3,6 +3,14 @@ using System;
 
 public class LevelSelect : Control
 {
+    public override void _Process(float delta)
+    {
+        if(Input.IsActionJustPressed("menu"))
+        {
+            GetTree().ChangeScene("res://Level/Main.tscn");
+        }
+    }
+
     public void changeLevel(int num)
     {
         switch(num)

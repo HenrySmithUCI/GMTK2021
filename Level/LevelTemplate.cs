@@ -16,7 +16,7 @@ public class LevelTemplate : LevelController
         currentLevel = 
 "00000000000000000000" +
 "0      bbb         0" +
-"0        i         0" +
+"0      ggg         0" +
 "0    g      00     0" +
 "0           0      0" +
 "0   W  w       F   0" +
