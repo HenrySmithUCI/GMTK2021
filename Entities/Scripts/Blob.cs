@@ -9,6 +9,8 @@ public class Blob : Node2D
     public Texture[] playerElementTextures;
     [Export]
     public Texture[] elementParticles;
+    [Export]
+    public Color[] deathColors;
     
     public BlobData data;
 
@@ -75,7 +77,33 @@ public class Blob : Node2D
 
     public void die()
     {
+        Particles2D dp = GetNode<Particles2D>("DeathParticles");
+        dp.Modulate = getParticleColor(data.element);
+        dp.Emitting = true;
+        particles.Emitting = false;
+        GetNode<Sprite>("Sprite").Visible = false;
+        GetNode<Timer>("Timer").Start();
+    }
 
+    private Color getParticleColor(BlobElement element)
+    {
+        switch(element)
+        {
+            case BlobElement.BOX_BURNING:
+            case BlobElement.BOX_BURNING_INIT:
+                return deathColors[(int)BlobElement.BOX];
+            case BlobElement.GRASS_BURNING:
+            case BlobElement.GRASS_BURNING_INIT:
+                return deathColors[(int)BlobElement.GRASS];
+            case BlobElement.NEW_ICE:
+                return deathColors[(int)BlobElement.ICE];
+            default:
+                return deathColors[(int)element];
+        }
+    }
+
+    public void selfDelete()
+    {
         QueueFree();
     }
 }
