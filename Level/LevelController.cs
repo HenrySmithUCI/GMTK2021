@@ -110,22 +110,25 @@ public class LevelController : TileMap
 
     public override void _Process(float delta)
     {
-        if(Input.IsActionJustPressed("right"))
+        if (player != null)
         {
-            move(new Vector2(1, 0));
-        }
-        else if (Input.IsActionJustPressed("left"))
-        {
-            move(new Vector2(-1, 0));
-        }
+            if (Input.IsActionJustPressed("right"))
+            {
+                move(new Vector2(1, 0));
+            }
+            else if (Input.IsActionJustPressed("left"))
+            {
+                move(new Vector2(-1, 0));
+            }
 
-        if (Input.IsActionJustPressed("up"))
-        {
-            move(new Vector2(0, -1));
-        }
-        else if (Input.IsActionJustPressed("down"))
-        {
-            move(new Vector2(0, 1));
+            if (Input.IsActionJustPressed("up"))
+            {
+                move(new Vector2(0, -1));
+            }
+            else if (Input.IsActionJustPressed("down"))
+            {
+                move(new Vector2(0, 1));
+            }
         }
     }
 
@@ -143,7 +146,7 @@ public class LevelController : TileMap
             //GD.Print(data.countConnections());
             foreach(BlobData check in data.connected)
             {
-                if(check != null && seen.Contains(check) == false)
+                if(check != null && seen.Contains(check) == false && check.deathFlag == false)
                 {
                     fronteir.Add(check);
                     seen.Add(check);
@@ -194,6 +197,23 @@ public class LevelController : TileMap
         foreach(EntityData entity in entities)
         {
             entity.UpdateTurn();
+        }
+
+        List<EntityData> dupe = new List<EntityData>(entities);
+        foreach(EntityData entity in dupe)
+        {
+            if (entity.deathFlag == true)
+            {
+                getTile(entity.position).entity = null;
+                entityNodes[entity].Call("die");
+                entityNodes.Remove(entity);
+                entities.Remove(entity);
+
+                if(entity == player)
+                {
+                    player = null;
+                }
+            }
         }
     }
 
