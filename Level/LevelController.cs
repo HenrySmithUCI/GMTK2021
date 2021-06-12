@@ -53,7 +53,7 @@ public class LevelController : TileMap
             for(int x = 0; x < width; ++x)
             {
                 Tile t = getTile(new Vector2(x,y));
-                if(t.isBlock)
+                if(t.type == TileType.BLOCK)
                     ret += "0";
                 else if(t.entity == null)
                     ret += " ";
@@ -128,15 +128,17 @@ public class LevelController : TileMap
                 switch(c)
                 {
                     case ' ':
-                        tiles[x,y] = new Tile(false);
+                        tiles[x,y] = new Tile(TileType.NONE);
                         if(newLevel)
                             SetCell(x, y, 0);
                     break;
                     case '0':
-                        tiles[x,y] = new Tile(true);
+                        tiles[x,y] = new Tile(TileType.BLOCK);
                         if(newLevel)
                             SetCell(x, y, 1);
                         break;
+                    case 'v':
+
                     case 'g':
                     case 'w':
                     case 'f':
@@ -149,7 +151,7 @@ public class LevelController : TileMap
                     case '`':
                     case '~':
                         entities.Add(new BlobData(new Vector2(x,y), charToElement(c)));
-                        tiles[x,y] = new Tile(false);
+                        tiles[x,y] = new Tile(TileType.NONE);
                         if(newLevel)
                             SetCell(x, y, 0);
                         break;
@@ -158,7 +160,7 @@ public class LevelController : TileMap
                     case 'F':
                     case 'S':
                         entities.Add(new BlobData(new Vector2(x,y), charToElement(char.ToLower(c)), true));
-                        tiles[x,y] = new Tile(false);
+                        tiles[x,y] = new Tile(TileType.NONE);
                         if(newLevel)
                             SetCell(x, y, 0);
                         break;
@@ -261,7 +263,6 @@ public class LevelController : TileMap
             {
                 move(new Vector2(-1, 0));
             }
-
             if (Input.IsActionJustPressed("up"))
             {
                 move(new Vector2(0, -1));
@@ -269,6 +270,10 @@ public class LevelController : TileMap
             else if (Input.IsActionJustPressed("down"))
             {
                 move(new Vector2(0, 1));
+            }
+            else if (Input.IsActionJustPressed("step"))
+            {
+                move(new Vector2(0, 0));
             }
         }
 
@@ -415,7 +420,7 @@ public class LevelController : TileMap
     private bool checkFree(Vector2 pos, HashSet<BlobData> active)
     {
         Tile tile = getTile(pos);
-        if(tile == null || tile.isBlock)
+        if(tile == null || tile.type == TileType.BLOCK)
             return false;
         if(tile.entity != null)
         {

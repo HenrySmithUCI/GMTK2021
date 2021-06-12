@@ -26,7 +26,6 @@ public class LevelMakeLevel : LevelController
             {
                 move(new Vector2(-1, 0));
             }
-
             if (Input.IsActionJustPressed("up"))
             {
                 move(new Vector2(0, -1));
@@ -34,6 +33,10 @@ public class LevelMakeLevel : LevelController
             else if (Input.IsActionJustPressed("down"))
             {
                 move(new Vector2(0, 1));
+            }
+            else if (Input.IsActionJustPressed("step"))
+            {
+                move(new Vector2(0, 0));
             }
         }
 

@@ -3,11 +3,13 @@ using System;
 
 public class Tile
 {
-    public bool isBlock;
     public EntityData entity;
+    public TileType type;
 
-    public Tile(bool isBlock)
+    public Tile(TileType t)
     {
-        this.isBlock = isBlock;
+        type = t;
     }
 }
+
+public enum TileType {NONE,BLOCK,VICTORY,VICTORY_PLAYER,CONVERT_FIRE,CONVERT_WATER,CONVERT_GRASS}

@@ -34,14 +34,14 @@ margin_top = 7.0
 margin_right = 353.0
 margin_bottom = 333.0
 
-[node name="LineEdit" type="LineEdit" parent="PanelContainer/VBoxContainer"]
+[node name="0" type="LineEdit" parent="PanelContainer/VBoxContainer"]
 margin_right = 346.0
 margin_bottom = 26.0
 text = "00000000000000000000"
 max_length = 20
 expand_to_text_length = true
 
-[node name="LineEdit2" type="LineEdit" parent="PanelContainer/VBoxContainer"]
+[node name="1" type="LineEdit" parent="PanelContainer/VBoxContainer"]
 margin_top = 30.0
 margin_right = 346.0
 margin_bottom = 56.0
@@ -49,7 +49,7 @@ text = "0                  0"
 max_length = 20
 expand_to_text_length = true
 
-[node name="LineEdit3" type="LineEdit" parent="PanelContainer/VBoxContainer"]
+[node name="2" type="LineEdit" parent="PanelContainer/VBoxContainer"]
 margin_top = 60.0
 margin_right = 346.0
 margin_bottom = 86.0
@@ -57,7 +57,7 @@ text = "0                  0"
 max_length = 20
 expand_to_text_length = true
 
-[node name="LineEdit4" type="LineEdit" parent="PanelContainer/VBoxContainer"]
+[node name="3" type="LineEdit" parent="PanelContainer/VBoxContainer"]
 margin_top = 90.0
 margin_right = 346.0
 margin_bottom = 116.0
@@ -65,7 +65,7 @@ text = "0                  0"
 max_length = 20
 expand_to_text_length = true
 
-[node name="LineEdit5" type="LineEdit" parent="PanelContainer/VBoxContainer"]
+[node name="4" type="LineEdit" parent="PanelContainer/VBoxContainer"]
 margin_top = 120.0
 margin_right = 346.0
 margin_bottom = 146.0
@@ -73,7 +73,7 @@ text = "0                  0"
 max_length = 20
 expand_to_text_length = true
 
-[node name="LineEdit6" type="LineEdit" parent="PanelContainer/VBoxContainer"]
+[node name="5" type="LineEdit" parent="PanelContainer/VBoxContainer"]
 margin_top = 150.0
 margin_right = 346.0
 margin_bottom = 176.0
@@ -81,7 +81,7 @@ text = "0                  0"
 max_length = 20
 expand_to_text_length = true
 
-[node name="LineEdit7" type="LineEdit" parent="PanelContainer/VBoxContainer"]
+[node name="6" type="LineEdit" parent="PanelContainer/VBoxContainer"]
 margin_top = 180.0
 margin_right = 346.0
 margin_bottom = 206.0
@@ -89,7 +89,7 @@ text = "0                  0"
 max_length = 20
 expand_to_text_length = true
 
-[node name="LineEdit8" type="LineEdit" parent="PanelContainer/VBoxContainer"]
+[node name="7" type="LineEdit" parent="PanelContainer/VBoxContainer"]
 margin_top = 210.0
 margin_right = 346.0
 margin_bottom = 236.0
@@ -97,7 +97,7 @@ text = "0                  0"
 max_length = 20
 expand_to_text_length = true
 
-[node name="LineEdit9" type="LineEdit" parent="PanelContainer/VBoxContainer"]
+[node name="8" type="LineEdit" parent="PanelContainer/VBoxContainer"]
 margin_top = 240.0
 margin_right = 346.0
 margin_bottom = 266.0
@@ -105,7 +105,7 @@ text = "0                  0"
 max_length = 20
 expand_to_text_length = true
 
-[node name="LineEdit10" type="LineEdit" parent="PanelContainer/VBoxContainer"]
+[node name="9" type="LineEdit" parent="PanelContainer/VBoxContainer"]
 margin_top = 270.0
 margin_right = 346.0
 margin_bottom = 296.0
@@ -113,7 +113,7 @@ text = "0                  0"
 max_length = 20
 expand_to_text_length = true
 
-[node name="LineEdit11" type="LineEdit" parent="PanelContainer/VBoxContainer"]
+[node name="10" type="LineEdit" parent="PanelContainer/VBoxContainer"]
 margin_top = 300.0
 margin_right = 346.0
 margin_bottom = 326.0
@@ -183,17 +183,18 @@ fwgs=Blob
 b=Box i=Ice
 vV=Victory
 123=Convert"
-[connection signal="text_changed" from="PanelContainer/VBoxContainer/LineEdit" to="." method="textChange" binds= [ 0 ]]
-[connection signal="text_changed" from="PanelContainer/VBoxContainer/LineEdit2" to="." method="textChange" binds= [ 1 ]]
-[connection signal="text_changed" from="PanelContainer/VBoxContainer/LineEdit3" to="." method="textChange" binds= [ 2 ]]
-[connection signal="text_changed" from="PanelContainer/VBoxContainer/LineEdit4" to="." method="textChange" binds= [ 3 ]]
-[connection signal="text_changed" from="PanelContainer/VBoxContainer/LineEdit5" to="." method="textChange" binds= [ 4 ]]
-[connection signal="text_changed" from="PanelContainer/VBoxContainer/LineEdit6" to="." method="textChange" binds= [ 5 ]]
-[connection signal="text_changed" from="PanelContainer/VBoxContainer/LineEdit7" to="." method="textChange" binds= [ 6 ]]
-[connection signal="text_changed" from="PanelContainer/VBoxContainer/LineEdit8" to="." method="textChange" binds= [ 7 ]]
-[connection signal="text_changed" from="PanelContainer/VBoxContainer/LineEdit9" to="." method="textChange" binds= [ 8 ]]
-[connection signal="text_changed" from="PanelContainer/VBoxContainer/LineEdit10" to="." method="textChange" binds= [ 9 ]]
-[connection signal="text_changed" from="PanelContainer/VBoxContainer/LineEdit11" to="." method="textChange" binds= [ 10 ]]
+[connection signal="text_changed" from="PanelContainer/VBoxContainer/0" to="." method="textChange" binds= [ 0 ]]
+[connection signal="text_changed" from="PanelContainer/VBoxContainer/1" to="." method="textChange" binds= [ 1 ]]
+[connection signal="text_changed" from="PanelContainer/VBoxContainer/2" to="." method="textChange" binds= [ 2 ]]
+[connection signal="text_changed" from="PanelContainer/VBoxContainer/3" to="." method="textChange" binds= [ 3 ]]
+[connection signal="text_changed" from="PanelContainer/VBoxContainer/4" to="." method="textChange" binds= [ 4 ]]
+[connection signal="text_changed" from="PanelContainer/VBoxContainer/5" to="." method="textChange" binds= [ 5 ]]
+[connection signal="text_changed" from="PanelContainer/VBoxContainer/6" to="." method="textChange" binds= [ 6 ]]
+[connection signal="text_changed" from="PanelContainer/VBoxContainer/7" to="." method="textChange" binds= [ 7 ]]
+[connection signal="text_changed" from="PanelContainer/VBoxContainer/8" to="." method="textChange" binds= [ 8 ]]
+[connection signal="text_changed" from="PanelContainer/VBoxContainer/9" to="." method="textChange" binds= [ 9 ]]
+[connection signal="text_changed" from="PanelContainer/VBoxContainer/10" to="." method="textChange" binds= [ 10 ]]
 [connection signal="pressed" from="Back" to="." method="back"]
+[connection signal="pressed" from="Copy" to="." method="copy"]
+[connection signal="pressed" from="Paste" to="." method="paste"]
 [connection signal="pressed" from="Play" to="." method="play"]
-
