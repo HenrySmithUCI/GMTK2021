@@ -28,9 +28,9 @@ public class LevelController : TileMap
 
     protected void setUpLevel(int[,] walls)
     {
-        width = walls.GetLength(0);
-        height = walls.GetLength(1);
-        tiles = new Tile[width,height];
+        height = walls.GetLength(0);
+        width = walls.GetLength(1);
+        tiles = new Tile[width, height];
         entityNodes = new Dictionary<EntityData, Node2D>();
 
         // turn info from walls into auto tile map
@@ -38,27 +38,27 @@ public class LevelController : TileMap
         {
             for(int j = 0; j < height; j++)
             {
-                if (walls[i, j] == 1)
+                if (walls[j, i] == 1)
                 {
                     tiles[i,j] = new Tile(true);
-                    SetCell(j, i, 1);
+                    SetCell(i, j, 1);
                 }
-                if(walls[i,j] == 0)
+                if(walls[j,i] == 0)
                 {
                     tiles[i,j] = new Tile(false);
-                    SetCell(j,i, 0);
+                    SetCell(i,j, 0);
                 }
             }
         }
         for(int i = -1; i <= width; ++i)
         {
-            SetCell(-1,i,1);
-            SetCell(height,i,1);
+            SetCell(i, -1, 1);
+            SetCell(i, height,1);
         }
         for(int j = -1; j <= height; ++j)
         {
-            SetCell(j,-1,1);
-            SetCell(j,width,1);
+            SetCell(-1, j,1);
+            SetCell(width, j,1);
         }
         UpdateBitmaskRegion();
 
@@ -67,11 +67,16 @@ public class LevelController : TileMap
             entity.level = this;
             if(entity is BlobData bl)
             {
+                Blob blob;
                 if(entity is PlayerData p)
                 {
                     player = p;
+                    blob = (Blob)playerScene.Instance();
                 }
-                Blob blob = (Blob)playerScene.Instance();
+                else
+                {
+                    blob = (Blob)blobScene.Instance();
+                }
                 blob.data = bl;
                 AddChild(blob);
                 entityNodes[entity] = blob;
@@ -96,11 +101,11 @@ public class LevelController : TileMap
 
     public Tile getTile(Vector2 tilePos)
     {
-        if(tilePos.x < 0 || tilePos.x >= height || tilePos.y < 0 || tilePos.y >= width)
+        if(tilePos.x < 0 || tilePos.x >= width || tilePos.y < 0 || tilePos.y >= height)
         {
             return null;
         }
-        return tiles[(int)tilePos.y,(int)tilePos.x];
+        return tiles[(int)tilePos.x, (int)tilePos.y];
     }
 
     public override void _Process(float delta)
@@ -139,6 +144,7 @@ public class LevelController : TileMap
                 {
                     fronteir.Add(check);
                     seen.Add(check);
+                    connected.Add(check);
                 }
             }
         }
@@ -170,8 +176,10 @@ public class LevelController : TileMap
         {
             foreach(BlobData b in moving)
             {
+                getTile(b.position).entity = null;
                 Vector2 nextPos = b.position + dir;
                 b.position = nextPos;
+                getTile(b.position).entity = b;
                 ((Blob)entityNodes[b]).Move(dir);
 
                 //b.move(nextPos);
