@@ -13,12 +13,12 @@ public class LevelTemplate : LevelController
 {
     public override void _Ready()
     {
-        string level = 
+        currentLevel = 
 "00000000000000000000" +
 "0                  0" +
 "0                  0" +
-"0   gg     00      0" +
-"0           0      0" +
+"0                  0" +
+"0                  0" +
 "0   F  w           0" +
 "0                  0" +
 "0   s       W      0" +
@@ -26,6 +26,6 @@ public class LevelTemplate : LevelController
 "0                  0" +
 "00000000000000000000";
 
-        setUpLevel(level);
+        setUpLevel(currentLevel);
     }
 }
