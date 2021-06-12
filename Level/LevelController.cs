@@ -285,7 +285,7 @@ public class LevelController : TileMap
         {
             if(tile.entity is BlobData blob)
             {
-                return active.Contains(blob);
+                return active.Contains(blob) && blob.element != BlobElement.ICE;
             }
         }
         return true;
