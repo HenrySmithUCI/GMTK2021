@@ -61,6 +61,8 @@
     <Compile Include="Entities\Scripts\Blob.cs" />
     <Compile Include="Entities\Scripts\EntityData.cs" />
     <Compile Include="Level\LevelController.cs" />
+    <Compile Include="Level\LevelMake.cs" />
+    <Compile Include="Level\Levels\LevelMakeLevel.cs" />
     <Compile Include="Level\LevelTemplate.cs" />
     <Compile Include="Level\Tile.cs" />
     <Compile Include="Level\Main.cs" />
