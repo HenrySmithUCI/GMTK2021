@@ -131,24 +131,25 @@ public class LevelController : TileMap
 
     private HashSet<BlobData> getActiveBlobs()
     {
-        HashSet<BlobData> connected = new HashSet<BlobData>() {player};
+        HashSet<BlobData> connected = new HashSet<BlobData>() {};
         List<BlobData> fronteir = new List<BlobData>() {player};
         HashSet<BlobData> seen = new HashSet<BlobData>() {player};
-        while(fronteir.Count != 0)
+        while(fronteir.Count > 0)
         {
             BlobData data = fronteir[0];
             fronteir.RemoveAt(0);
+            connected.Add(data);
+            //GD.Print(data.element);
+            //GD.Print(data.countConnections());
             foreach(BlobData check in data.connected)
             {
                 if(check != null && seen.Contains(check) == false)
                 {
                     fronteir.Add(check);
                     seen.Add(check);
-                    connected.Add(check);
                 }
             }
         }
-
         return connected;
     }
 
@@ -176,7 +177,9 @@ public class LevelController : TileMap
         {
             foreach(BlobData b in moving)
             {
-                getTile(b.position).entity = null;
+                Tile tile = getTile(b.position);
+                if(tile.entity == b)
+                    tile.entity = null;
                 Vector2 nextPos = b.position + dir;
                 b.position = nextPos;
                 getTile(b.position).entity = b;

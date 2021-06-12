@@ -13,6 +13,14 @@ public class BlobData : EntityData
 {
     public BlobElement element;
     public BlobData[] connected;
+    public int countConnections()
+    {
+        int ret = 0;
+        foreach(var blob in connected)
+            if(blob != null)
+                ++ret;
+        return ret;
+    }
     public BlobData(Vector2 pos, BlobElement element)
     {
         connected = new BlobData[4];
