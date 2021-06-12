@@ -1,8 +1,45 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Level/Main.cs" type="Script" id=1]
 [ext_resource path="res://Sophia/CustomTheme.tres" type="Theme" id=2]
-[ext_resource path="res://Ian/title.png" type="Texture" id=3]
+[ext_resource path="res://Level/Characters.png" type="Texture" id=3]
+[ext_resource path="res://Level/Tiles.tres" type="TileSet" id=4]
+[ext_resource path="res://Sophia/Water.png" type="Texture" id=5]
+[ext_resource path="res://Sophia/Grass.png" type="Texture" id=6]
+[ext_resource path="res://Sophia/Fire.png" type="Texture" id=7]
+[ext_resource path="res://Entities/FireParticles.tres" type="Material" id=8]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 3 )
+region = Rect2( 64, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 16, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 3 )
+region = Rect2( 96, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 3 )
+region = Rect2( 32, 16, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 32, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 3 )
+region = Rect2( 64, 16, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 3 )
+region = Rect2( 96, 16, 16, 16 )
 
 [node name="Main" type="Control"]
 anchor_right = 1.0
@@ -13,13 +50,76 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect" type="TextureRect" parent="."]
-margin_right = 320.0
-margin_bottom = 180.0
-texture = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 4 )
+cell_size = Vector2( 16, 16 )
+format = 1
+tile_data = PoolIntArray( -1, 1, 262152, -65536, 1, 10, -65535, 1, 262154, -65534, 1, 262154, -65533, 1, 10, -65532, 1, 262154, -65531, 1, 10, -65530, 1, 10, -65529, 1, 10, -65528, 1, 10, -65527, 1, 262154, -65526, 1, 10, -65525, 1, 10, -65524, 1, 10, -65523, 1, 262154, -65522, 1, 262154, -65521, 1, 10, -65520, 1, 10, -65519, 1, 10, -65518, 1, 262154, -65517, 1, 262154, -65516, 1, 262155, 65535, 1, 327688, 0, 1, 131081, 1, 1, 393225, 2, 1, 393222, 3, 1, 196617, 4, 1, 458761, 5, 1, 196617, 6, 1, 458761, 7, 1, 196617, 8, 1, 196617, 9, 1, 196617, 10, 1, 196617, 11, 1, 458761, 12, 1, 196617, 13, 1, 196617, 14, 1, 458762, 15, 1, 458761, 16, 1, 458761, 17, 1, 196617, 18, 1, 131077, 19, 1, 131081, 20, 1, 393227, 131071, 1, 327688, 65536, 1, 393225, 65537, 1, 131078, 65538, 1, 458763, 65539, 0, 1, 65540, 0, 2, 65541, 0, 3, 65542, 0, 2, 65543, 0, 1, 65544, 0, 0, 65545, 0, 0, 65546, 0, 3, 65547, 0, 2, 65548, 0, 0, 65549, 0, 2, 65550, 1, 393216, 65551, 0, 0, 65552, 0, 2, 65553, 0, 1, 65554, 1, 196616, 65555, 1, 393221, 65556, 1, 131083, 196607, 1, 327688, 131072, 1, 393222, 131073, 1, 458763, 131074, 0, 2, 131075, 0, 3, 131076, 0, 1, 131077, 0, 0, 131078, 0, 1, 131079, 0, 2, 131080, 0, 3, 131081, 0, 1, 131082, 0, 3, 131083, 0, 2, 131084, 0, 0, 131085, 0, 0, 131086, 0, 3, 131087, 0, 3, 131088, 0, 0, 131089, 0, 1, 131090, 0, 3, 131091, 1, 65544, 131092, 1, 393227, 262143, 1, 327688, 196608, 1, 131083, 196609, 0, 2, 196610, 0, 0, 196611, 0, 1, 196612, 0, 1, 196613, 0, 1, 196614, 0, 1, 196615, 0, 2, 196616, 0, 1, 196617, 0, 2, 196618, 0, 1, 196619, 0, 2, 196620, 0, 0, 196621, 0, 3, 196622, 1, 262152, 196623, 1, 262154, 196624, 1, 11, 196625, 0, 2, 196626, 0, 0, 196627, 1, 65544, 196628, 1, 131083, 327679, 1, 327688, 262144, 1, 131083, 262145, 0, 0, 262146, 1, 196609, 262147, 1, 196610, 262148, 1, 262147, 262149, 0, 1, 262150, 0, 2, 262151, 0, 0, 262152, 0, 3, 262153, 0, 0, 262154, 0, 1, 262155, 0, 0, 262156, 0, 1, 262157, 0, 2, 262158, 1, 327688, 262159, 1, 131078, 262160, 1, 458758, 262161, 1, 458754, 262162, 1, 196610, 262163, 1, 131080, 262164, 1, 393227, 393215, 1, 65544, 327680, 1, 393227, 327681, 0, 2, 327682, 0, 0, 327683, 0, 2, 327684, 1, 131072, 327685, 0, 1, 327686, 0, 3, 327687, 0, 3, 327688, 0, 1, 327689, 0, 1, 327690, 0, 2, 327691, 0, 1, 327692, 0, 1, 327693, 0, 0, 327694, 1, 327688, 327695, 1, 393227, 327696, 0, 1, 327697, 0, 3, 327698, 0, 1, 327699, 1, 65544, 327700, 1, 393227, 458751, 1, 327688, 393216, 1, 393227, 393217, 0, 2, 393218, 0, 0, 393219, 0, 1, 393220, 0, 1, 393221, 0, 3, 393222, 0, 0, 393223, 0, 1, 393224, 0, 2, 393225, 0, 2, 393226, 0, 2, 393227, 0, 1, 393228, 0, 1, 393229, 0, 3, 393230, 1, 196616, 393231, 1, 196619, 393232, 0, 2, 393233, 0, 1, 393234, 0, 1, 393235, 1, 65544, 393236, 1, 131083, 524287, 1, 327688, 458752, 1, 131083, 458753, 0, 0, 458754, 0, 1, 458755, 0, 2, 458756, 0, 2, 458757, 2, 0, 458758, 0, 3, 458759, 0, 1, 458760, 0, 3, 458761, 0, 0, 458762, 0, 0, 458763, 0, 0, 458764, 0, 3, 458765, 0, 1, 458766, 0, 1, 458767, 0, 0, 458768, 0, 0, 458769, 0, 1, 458770, 0, 1, 458771, 1, 327688, 458772, 1, 393227, 589823, 1, 65544, 524288, 1, 131083, 524289, 0, 3, 524290, 0, 2, 524291, 0, 3, 524292, 3, 0, 524293, 3, 0, 524294, 2, 0, 524295, 0, 3, 524296, 0, 1, 524297, 0, 3, 524298, 0, 0, 524299, 0, 0, 524300, 0, 1, 524301, 0, 0, 524302, 0, 3, 524303, 0, 3, 524304, 0, 3, 524305, 0, 1, 524306, 0, 3, 524307, 1, 65544, 524308, 1, 393227, 655359, 1, 65544, 589824, 1, 131083, 589825, 0, 3, 589826, 3, 0, 589827, 2, 0, 589828, 2, 0, 589829, 0, 1, 589830, 1, 0, 589831, 0, 0, 589832, 0, 2, 589833, 0, 1, 589834, 0, 1, 589835, 0, 1, 589836, 0, 1, 589837, 1, 0, 589838, 0, 3, 589839, 0, 3, 589840, 0, 3, 589841, 0, 1, 589842, 0, 1, 589843, 1, 65544, 589844, 1, 393227, 720895, 1, 327688, 655360, 1, 65542, 655361, 1, 262154, 655362, 1, 262154, 655363, 1, 262154, 655364, 1, 262154, 655365, 1, 10, 655366, 1, 262153, 655367, 1, 262154, 655368, 1, 10, 655369, 1, 262154, 655370, 1, 262154, 655371, 1, 262154, 655372, 1, 262154, 655373, 1, 262153, 655374, 1, 262154, 655375, 1, 10, 655376, 1, 262154, 655377, 1, 10, 655378, 1, 10, 655379, 1, 65541, 655380, 1, 131083, 786431, 1, 65544, 720896, 1, 393225, 720897, 1, 131081, 720898, 1, 393225, 720899, 1, 131081, 720900, 1, 131081, 720901, 1, 131081, 720902, 1, 131081, 720903, 1, 393225, 720904, 1, 131081, 720905, 1, 131081, 720906, 1, 393225, 720907, 1, 131081, 720908, 1, 393225, 720909, 1, 393225, 720910, 1, 393225, 720911, 1, 131081, 720912, 1, 131081, 720913, 1, 131081, 720914, 1, 393225, 720915, 1, 393225, 720916, 1, 131083, 851967, 1, 196616, 786432, 1, 196617, 786433, 1, 458761, 786434, 1, 458761, 786435, 1, 458761, 786436, 1, 458761, 786437, 1, 196617, 786438, 1, 458761, 786439, 1, 196617, 786440, 1, 458761, 786441, 1, 196617, 786442, 1, 458761, 786443, 1, 196617, 786444, 1, 196617, 786445, 1, 196617, 786446, 1, 458761, 786447, 1, 458761, 786448, 1, 196617, 786449, 1, 196617, 786450, 1, 196617, 786451, 1, 196617, 786452, 1, 196619 )
+
+[node name="Sprite" type="Sprite" parent="TileMap"]
+position = Vector2( 32, 96 )
+texture = SubResource( 1 )
+offset = Vector2( 8, 8 )
+
+[node name="Particles2D" type="Particles2D" parent="TileMap/Sprite"]
+position = Vector2( 8, 8 )
+process_material = ExtResource( 8 )
+texture = ExtResource( 7 )
+
+[node name="Sprite2" type="Sprite" parent="TileMap"]
+position = Vector2( 256, 128 )
+texture = SubResource( 2 )
+offset = Vector2( 8, 8 )
+
+[node name="Particles2D2" type="Particles2D" parent="TileMap/Sprite2"]
+position = Vector2( 8, 8 )
+process_material = ExtResource( 8 )
+texture = ExtResource( 6 )
+
+[node name="Sprite3" type="Sprite" parent="TileMap"]
+position = Vector2( 128, 48 )
+texture = SubResource( 3 )
+offset = Vector2( 8, 8 )
+
+[node name="Particles2D3" type="Particles2D" parent="TileMap/Sprite3"]
+position = Vector2( 8, 8 )
+process_material = ExtResource( 8 )
+texture = ExtResource( 7 )
+
+[node name="Sprite4" type="Sprite" parent="TileMap"]
+position = Vector2( 128, 32 )
+texture = SubResource( 4 )
+offset = Vector2( 8, 8 )
+
+[node name="Sprite6" type="Sprite" parent="TileMap"]
+position = Vector2( 272, 32 )
+texture = SubResource( 5 )
+offset = Vector2( 8, 8 )
+
+[node name="Particles2D3" type="Particles2D" parent="TileMap/Sprite6"]
+position = Vector2( 8, 8 )
+process_material = ExtResource( 8 )
+texture = ExtResource( 5 )
+
+[node name="Sprite5" type="Sprite" parent="TileMap"]
+position = Vector2( 224, 32 )
+texture = SubResource( 6 )
+offset = Vector2( 8, 8 )
+
+[node name="Sprite7" type="Sprite" parent="TileMap"]
+position = Vector2( 256, 112 )
+texture = SubResource( 7 )
+offset = Vector2( 8, 8 )
+
+[node name="Particles2D3" type="Particles2D" parent="TileMap/Sprite7"]
+position = Vector2( 8, 8 )
+process_material = ExtResource( 8 )
+texture = ExtResource( 6 )
+
+[node name="Sprite8" type="Sprite" parent="TileMap"]
+position = Vector2( 272, 128 )
+texture = SubResource( 8 )
+offset = Vector2( 8, 8 )
 
 [node name="Label" type="Label" parent="."]
 anchor_left = 0.5
@@ -41,15 +141,18 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 margin_left = -38.0
-margin_top = -48.0
-margin_right = 38.0
+margin_top = -71.0
+margin_right = 32.0
+margin_bottom = -23.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Play" type="Button" parent="VBoxContainer"]
-margin_right = 76.0
+margin_right = 70.0
 margin_bottom = 22.0
+focus_neighbour_top = NodePath("../Quit")
+focus_neighbour_bottom = NodePath("../Quit")
 text = "Play"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -57,8 +160,10 @@ __meta__ = {
 
 [node name="Quit" type="Button" parent="VBoxContainer"]
 margin_top = 26.0
-margin_right = 76.0
+margin_right = 70.0
 margin_bottom = 48.0
+focus_neighbour_top = NodePath("../Play")
+focus_neighbour_bottom = NodePath("../Play")
 text = "Quit"
 __meta__ = {
 "_edit_use_anchors_": false

@@ -3,6 +3,11 @@ using System;
 
 public class Main : Control
 {
+    public override void _Ready()
+    {
+        GetNode<VBoxContainer>("VBoxContainer").GetNode<Button>("Play").GrabFocus();
+    }
+
     public override void _Process(float delta)
     {
         if (Input.IsActionJustPressed("menu"))
