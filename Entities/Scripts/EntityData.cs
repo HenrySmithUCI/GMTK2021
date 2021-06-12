@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public class EntityData
+public abstract class EntityData
 {
     public LevelController level;
     public Vector2 position;
@@ -13,6 +13,7 @@ public class BlobData : EntityData
 {
     public BlobElement element;
     public BlobData[] connected;
+    
     public int countConnections()
     {
         int ret = 0;
@@ -21,12 +22,14 @@ public class BlobData : EntityData
                 ++ret;
         return ret;
     }
+    
     public BlobData(Vector2 pos, BlobElement element)
     {
         connected = new BlobData[4];
         position = pos;
         this.element = element;
     }
+
     public override void UpdateTurn()
     {
         Vector2[] dirs = new Vector2[4] {new Vector2(0,1), new Vector2(1,0), new Vector2(0,-1), new Vector2(-1,0)};
