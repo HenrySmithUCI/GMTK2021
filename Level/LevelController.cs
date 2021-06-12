@@ -149,7 +149,7 @@ public class LevelController : TileMap
 
     public override void _Process(float delta)
     {
-        if (player != null)
+        if (players.Count > 0)
         {
             if (Input.IsActionJustPressed("right"))
             {
@@ -258,9 +258,9 @@ public class LevelController : TileMap
                 entityNodes.Remove(entity);
                 entities.Remove(entity);
 
-                if(entity == player)
+                if(entity is PlayerData player && players.Contains(player))
                 {
-                    player = null;
+                    players.Remove(player);
                 }
             }
         }
