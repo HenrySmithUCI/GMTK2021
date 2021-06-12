@@ -1,0 +1,45 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Entities/Scripts/Blob.cs" type="Script" id=1]
+[ext_resource path="res://Level/Characters.png" type="Texture" id=2]
+[ext_resource path="res://Entities/FireParticles.tres" type="Material" id=3]
+[ext_resource path="res://Sophia/Water.png" type="Texture" id=4]
+[ext_resource path="res://Sophia/Grass.png" type="Texture" id=5]
+[ext_resource path="res://Sophia/Fire.png" type="Texture" id=6]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 2 )
+region = Rect2( 96, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 2 )
+region = Rect2( 32, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 2 )
+region = Rect2( 64, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 16, 16 )
+
+[node name="PlayerBlob" type="Node2D"]
+script = ExtResource( 1 )
+elementTextures = [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ]
+elementParticles = [ null, ExtResource( 6 ), ExtResource( 4 ), ExtResource( 5 ) ]
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 8, 8 )
+texture = SubResource( 5 )
+
+[node name="Particles" type="Particles2D" parent="."]
+visible = false
+position = Vector2( 8, 8 )
+visibility_rect = Rect2( -16, -16, 32, 32 )
+local_coords = false
+process_material = ExtResource( 3 )
+texture = ExtResource( 6 )

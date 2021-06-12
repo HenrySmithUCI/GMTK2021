@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Characters.png-bef148cc1a9d9f52a042a029634991ec.stex"
+path="res://.import/Water.png-ea6364f0669ad893175707ee320e6c2f.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sophia/Characters.png"
-dest_files=[ "res://.import/Characters.png-bef148cc1a9d9f52a042a029634991ec.stex" ]
+source_file="res://Sophia/Water.png"
+dest_files=[ "res://.import/Water.png-ea6364f0669ad893175707ee320e6c2f.stex" ]
 
 [params]
 
