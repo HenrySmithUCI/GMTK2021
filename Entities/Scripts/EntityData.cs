@@ -7,6 +7,7 @@ public abstract class EntityData
     public LevelController level;
     public Vector2 position;
     public virtual void UpdateTurn() {}
+    public virtual void PreUpdate() {}
     public bool deathFlag = false;
     public int deathTimer = -1;
     public bool isPlayer = false;
@@ -32,6 +33,14 @@ public class BlobData : EntityData
         position = pos;
         this.element = element;
         isPlayer = bePlayer;
+    }
+
+    public override void PreUpdate()
+    {
+        if(element == BlobElement.NEW_ICE)
+        {
+            level.entityNodes[this].Call("ChangeElement", BlobElement.ICE);
+        }
     }
 
     public override void UpdateTurn()
