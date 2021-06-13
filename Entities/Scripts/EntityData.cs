@@ -35,6 +35,20 @@ public class BlobData : EntityData
         isPlayer = bePlayer;
     }
 
+    public void getConnections()
+    {
+        Vector2[] dirs = new Vector2[4] {new Vector2(0,1), new Vector2(1,0), new Vector2(0,-1), new Vector2(-1,0)};
+        for(int i = 0; i < 4; ++i)
+        {
+            Tile tile = level.getTile(position + dirs[i]);
+            if(tile != null && tile.entity != null && tile.entity is BlobData blob 
+               && ((BlobData)tile.entity).element != BlobElement.BOX)
+                connected[i] = blob;
+            else
+                connected[i] = null;
+        }
+    }
+
     public override void PreUpdate()
     {
         HashSet<BlobElement> neighborElements = new HashSet<BlobElement>();
@@ -79,16 +93,7 @@ public class BlobData : EntityData
 
     public override void UpdateTurn()
     {
-        Vector2[] dirs = new Vector2[4] {new Vector2(0,1), new Vector2(1,0), new Vector2(0,-1), new Vector2(-1,0)};
-        for(int i = 0; i < 4; ++i)
-        {
-            Tile tile = level.getTile(position + dirs[i]);
-            if(tile != null && tile.entity != null && tile.entity is BlobData blob 
-               && ((BlobData)tile.entity).element != BlobElement.BOX)
-                connected[i] = blob;
-            else
-                connected[i] = null;
-        }
+        getConnections();
         ProcessSelf();
     }
 
@@ -137,6 +142,7 @@ public class BlobData : EntityData
                 if (neighborElements.Contains(BlobElement.WATER))
                 {
                     level.entityNodes[this].Call("SetParticles", BlobElement.GRASS);
+                    deathFlag = false;
                 }
                 break;
             case BlobElement.BOX:
@@ -172,7 +178,7 @@ public class BlobData : EntityData
     }
 }
 
-public enum BlobElement {STONE, FIRE, WATER, GRASS, BOX, ICE, BOX_BURNING, GRASS_BURNING, NEW_ICE, BOX_BURNING_INIT, GRASS_BURNING_INIT, PRE_WATER}
+public enum BlobElement {STONE, FIRE, WATER, GRASS, BOX, ICE, BOX_BURNING, GRASS_BURNING, NEW_ICE, BOX_BURNING_INIT, GRASS_BURNING_INIT, PRE_WATER, NONE}
 public enum Direction {UP, RIGHT, DOWN, LEFT}
 
 
