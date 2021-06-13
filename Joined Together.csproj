@@ -63,6 +63,7 @@
     <Compile Include="Ian\Key.cs" />
     <Compile Include="Ian\MuteButtons.cs" />
     <Compile Include="Ian\UI.cs" />
+    <Compile Include="Level\ErrorString.cs" />
     <Compile Include="Level\LevelController.cs" />
     <Compile Include="Level\LevelMake.cs" />
     <Compile Include="Level\Levels\LevelMakeLevel.cs" />
