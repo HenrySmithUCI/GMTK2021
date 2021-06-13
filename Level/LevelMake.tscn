@@ -124,9 +124,13 @@ expand_to_text_length = true
 
 [node name="Back" type="Button" parent="."]
 margin_left = 16.0
-margin_top = 100.0
+margin_top = 128.0
 margin_right = 92.0
-margin_bottom = 122.0
+margin_bottom = 150.0
+focus_neighbour_left = NodePath("../Paste")
+focus_neighbour_top = NodePath("../Play")
+focus_neighbour_right = NodePath("../Copy")
+focus_neighbour_bottom = NodePath("../Play")
 text = "Back"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -137,6 +141,8 @@ margin_left = 136.0
 margin_top = 138.0
 margin_right = 212.0
 margin_bottom = 160.0
+focus_neighbour_left = NodePath("../Play")
+focus_neighbour_right = NodePath("../Paste")
 text = "Copy"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -147,6 +153,8 @@ margin_left = 225.0
 margin_top = 138.0
 margin_right = 311.0
 margin_bottom = 160.0
+focus_neighbour_left = NodePath("../Copy")
+focus_neighbour_right = NodePath("../Play")
 text = "Paste"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -154,9 +162,13 @@ __meta__ = {
 
 [node name="Play" type="Button" parent="."]
 margin_left = 16.0
-margin_top = 129.0
+margin_top = 98.0
 margin_right = 92.0
-margin_bottom = 151.0
+margin_bottom = 120.0
+focus_neighbour_left = NodePath("../Paste")
+focus_neighbour_top = NodePath("../Back")
+focus_neighbour_right = NodePath("../Copy")
+focus_neighbour_bottom = NodePath("../Back")
 text = "Play"
 __meta__ = {
 "_edit_use_anchors_": false

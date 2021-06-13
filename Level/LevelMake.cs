@@ -24,6 +24,16 @@ public class LevelMake : Control
 "00000000000000000000";
         }
         populateText();
+
+        GetNode<Button>("Play").GrabFocus();
+    }
+
+    public override void _Process(float delta)
+    {
+        if(Input.IsActionJustPressed("menu"))
+        {
+            GetTree().ChangeScene("res://Level/LevelSelect.tscn");
+        }
     }
 
     public void back()
