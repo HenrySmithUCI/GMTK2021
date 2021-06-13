@@ -168,28 +168,17 @@ __meta__ = {
 margin_right = 118.0
 margin_bottom = 22.0
 focus_neighbour_top = NodePath("../Quit")
-focus_neighbour_bottom = NodePath("../Credit")
+focus_neighbour_bottom = NodePath("../Quit")
 text = "Play"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Credit" type="Button" parent="VBoxContainer"]
+[node name="Quit" type="Button" parent="VBoxContainer"]
 margin_top = 26.0
 margin_right = 118.0
 margin_bottom = 48.0
 focus_neighbour_top = NodePath("../Play")
-focus_neighbour_bottom = NodePath("../Quit")
-text = "Credits"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Quit" type="Button" parent="VBoxContainer"]
-margin_top = 52.0
-margin_right = 118.0
-margin_bottom = 74.0
-focus_neighbour_top = NodePath("../Credit")
 focus_neighbour_bottom = NodePath("../Play")
 text = "Quit"
 __meta__ = {
@@ -203,12 +192,26 @@ margin_right = 71.0
 margin_bottom = 163.0
 
 [node name="PlaySelect" parent="." instance=ExtResource( 9 )]
+
+[node name="Credit" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -44.0
+margin_top = -39.0
+margin_right = 132.0
+margin_bottom = 15.0
+rect_scale = Vector2( 0.5, 0.5 )
+text = "Created by:
+iahurd
+Dayliss413"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="focus_entered" from="VBoxContainer/Play" to="PlaySelect" method="play"]
 [connection signal="mouse_entered" from="VBoxContainer/Play" to="PlaySelect" method="play"]
 [connection signal="pressed" from="VBoxContainer/Play" to="." method="switchToPlay"]
-[connection signal="focus_entered" from="VBoxContainer/Credit" to="PlaySelect" method="play"]
-[connection signal="mouse_entered" from="VBoxContainer/Credit" to="PlaySelect" method="play"]
-[connection signal="pressed" from="VBoxContainer/Credit" to="." method="switchToPlay"]
 [connection signal="focus_entered" from="VBoxContainer/Quit" to="PlaySelect" method="play"]
 [connection signal="mouse_entered" from="VBoxContainer/Quit" to="PlaySelect" method="play"]
 [connection signal="pressed" from="VBoxContainer/Quit" to="." method="quit"]
