@@ -241,6 +241,7 @@ public class LevelController : TileMap
         foreach(var entity in entities)
         {
             ((BlobData)entity).getConnections();
+            ((Blob)entityNodes[entity]).Move(new Vector2(0,0));
         }
     }
 
