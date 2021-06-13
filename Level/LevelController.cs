@@ -19,16 +19,15 @@ public class LevelController : TileMap
     public float undoTimer = 0.5f;
     public bool victory = false;
 
-    // player is always entities[0]
-    //public BoxData[] entities;
-
-    // entities that are under control
-    //public List<BoxData> active = new List<BoxData>();
-
-    //public static int gridSize = 16;
+    protected AudioStreamPlayer moveSound;
 
     public int width = 20;
     public int height = 11;
+
+    public override void _Ready()
+    {
+        moveSound = GetNode<AudioStreamPlayer>("MoveSound");
+    }
 
     public void destroyLevel()
     {
@@ -426,6 +425,7 @@ public class LevelController : TileMap
     protected void move(Vector2 dir)
     {
         turnNumber += 1;
+        moveSound.Playing = true;
 
 		undoList.Insert(0, levelToString());
         HashSet<BlobData> seen = new HashSet<BlobData>();
