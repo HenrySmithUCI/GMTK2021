@@ -20,6 +20,7 @@ public class UI : CanvasLayer
     public void showWin()
     {
         GetNode<Control>("WinLabel").Visible = true;
+        GetNode<Control>("WinLabel").GetNode<HBoxContainer>("HBoxContainer").GetNode<Button>("Next").GrabFocus();
         victorySound.Playing = true;
     }
 
@@ -28,6 +29,10 @@ public class UI : CanvasLayer
         if(LevelController.levelNum == -1)
         {
             GetTree().ChangeScene("res://Level/LevelMake.tscn");
+        }
+        else if(LevelController.levelNum == 10)
+        {
+            GetTree().ChangeScene("res://Level/LevelSelect.tscn");
         }
         else
         {
