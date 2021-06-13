@@ -53,8 +53,30 @@ public class LevelController : TileMap
             for(int x = 0; x < width; ++x)
             {
                 Tile t = getTile(new Vector2(x,y));
-                if(t.type == TileType.BLOCK)
-                    ret += "0";
+                if(t.type != TileType.NONE)
+                {
+                    switch(t.type)
+                    {
+                        case TileType.BLOCK:
+                            ret += "0";
+                            break;
+                        case TileType.VICTORY:
+                            ret += "v";
+                            break;
+                        case TileType.VICTORY_PLAYER:
+                            ret += "V";
+                            break;
+                        case TileType.CONVERT_FIRE:
+                            ret += "1";
+                            break;
+                        case TileType.CONVERT_GRASS:
+                            ret += "3";
+                            break;
+                        case TileType.CONVERT_WATER:
+                            ret += "2";
+                            break;
+                    }
+                }
                 else if(t.entity == null)
                     ret += " ";
                 else
@@ -138,7 +160,30 @@ public class LevelController : TileMap
                             SetCell(x, y, 1);
                         break;
                     case 'v':
-
+                        tiles[x,y] = new Tile(TileType.VICTORY);
+                        if(newLevel)
+                            SetCell(x, y, 2);
+                        break;
+                    case 'V':
+                        tiles[x,y] = new Tile(TileType.VICTORY_PLAYER);
+                        if(newLevel)
+                            SetCell(x, y, 3);
+                        break;
+                    case '1':
+                        tiles[x,y] = new Tile(TileType.CONVERT_FIRE);
+                        if(newLevel)
+                            SetCell(x, y, 6);
+                        break;
+                    case '2':
+                        tiles[x,y] = new Tile(TileType.CONVERT_WATER);
+                        if(newLevel)
+                            SetCell(x, y, 5);
+                        break;
+                    case '3':
+                        tiles[x,y] = new Tile(TileType.CONVERT_GRASS);
+                        if(newLevel)
+                            SetCell(x, y, 4);
+                        break;
                     case 'g':
                     case 'w':
                     case 'f':
@@ -412,6 +457,8 @@ public class LevelController : TileMap
                 }
             }
         }
+
+
     }
 
     // checks if a specific tile is empty
