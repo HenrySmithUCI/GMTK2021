@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Ian/KeysArrows.png" type="Texture" id=1]
 [ext_resource path="res://Ian/KeysWASD.png" type="Texture" id=2]
 [ext_resource path="res://Ian/MuteButtons.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Ian/SpacebarKey.png" type="Texture" id=4]
+[ext_resource path="res://Sounds/victory.wav" type="AudioStream" id=5]
 [ext_resource path="res://Sophia/CustomTheme.tres" type="Theme" id=6]
 [ext_resource path="res://Ian/BackspaceKey.png" type="Texture" id=7]
 [ext_resource path="res://Ian/RKey.png" type="Texture" id=8]
@@ -175,5 +176,9 @@ margin_left = 19.0
 margin_top = 122.0
 margin_right = 71.0
 margin_bottom = 162.0
+
+[node name="VictorySound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+bus = "Effects"
 [connection signal="pressed" from="WinLabel/HBoxContainer/Back" to="." method="back"]
 [connection signal="pressed" from="WinLabel/HBoxContainer/Next" to="." method="next"]
