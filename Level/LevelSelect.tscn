@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Level/LevelSelect.cs" type="Script" id=1]
 [ext_resource path="res://Level/Tiles.tres" type="TileSet" id=2]
 [ext_resource path="res://Sophia/CustomTheme.tres" type="Theme" id=3]
 [ext_resource path="res://Sounds/select.wav" type="AudioStream" id=4]
 [ext_resource path="res://Sounds/Sound.cs" type="Script" id=5]
+[ext_resource path="res://Ian/MuteButtons.tscn" type="PackedScene" id=6]
 
 [node name="LevelSelect" type="Control"]
 anchor_right = 1.0
@@ -168,28 +169,47 @@ text = "10"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
+bus = "Effects"
 script = ExtResource( 5 )
+
+[node name="HBoxContainer" parent="." instance=ExtResource( 6 )]
+margin_left = 19.0
+margin_top = 123.0
+margin_right = 71.0
+margin_bottom = 163.0
 [connection signal="focus_entered" from="Back" to="AudioStreamPlayer" method="Play"]
+[connection signal="mouse_entered" from="Back" to="AudioStreamPlayer" method="Play"]
 [connection signal="pressed" from="Back" to="." method="changeLevel" binds= [ 0 ]]
 [connection signal="focus_entered" from="Custom" to="AudioStreamPlayer" method="Play"]
+[connection signal="mouse_entered" from="Custom" to="AudioStreamPlayer" method="Play"]
 [connection signal="pressed" from="Custom" to="." method="changeLevel" binds= [ -1 ]]
 [connection signal="focus_entered" from="GridContainer/Button1" to="AudioStreamPlayer" method="Play"]
+[connection signal="mouse_entered" from="GridContainer/Button1" to="AudioStreamPlayer" method="Play"]
 [connection signal="pressed" from="GridContainer/Button1" to="." method="changeLevel" binds= [ 1 ]]
 [connection signal="focus_entered" from="GridContainer/Button2" to="AudioStreamPlayer" method="Play"]
+[connection signal="mouse_entered" from="GridContainer/Button2" to="AudioStreamPlayer" method="Play"]
 [connection signal="pressed" from="GridContainer/Button2" to="." method="changeLevel" binds= [ 2 ]]
 [connection signal="focus_entered" from="GridContainer/Button3" to="AudioStreamPlayer" method="Play"]
+[connection signal="mouse_entered" from="GridContainer/Button3" to="AudioStreamPlayer" method="Play"]
 [connection signal="pressed" from="GridContainer/Button3" to="." method="changeLevel" binds= [ 3 ]]
 [connection signal="focus_entered" from="GridContainer/Button4" to="AudioStreamPlayer" method="Play"]
+[connection signal="mouse_entered" from="GridContainer/Button4" to="AudioStreamPlayer" method="Play"]
 [connection signal="pressed" from="GridContainer/Button4" to="." method="changeLevel" binds= [ 4 ]]
 [connection signal="focus_entered" from="GridContainer/Button5" to="AudioStreamPlayer" method="Play"]
+[connection signal="mouse_entered" from="GridContainer/Button5" to="AudioStreamPlayer" method="Play"]
 [connection signal="pressed" from="GridContainer/Button5" to="." method="changeLevel" binds= [ 5 ]]
 [connection signal="focus_entered" from="GridContainer/Button6" to="AudioStreamPlayer" method="Play"]
+[connection signal="mouse_entered" from="GridContainer/Button6" to="AudioStreamPlayer" method="Play"]
 [connection signal="pressed" from="GridContainer/Button6" to="." method="changeLevel" binds= [ 6 ]]
 [connection signal="focus_entered" from="GridContainer/Button7" to="AudioStreamPlayer" method="Play"]
+[connection signal="mouse_entered" from="GridContainer/Button7" to="AudioStreamPlayer" method="Play"]
 [connection signal="pressed" from="GridContainer/Button7" to="." method="changeLevel" binds= [ 7 ]]
 [connection signal="focus_entered" from="GridContainer/Button8" to="AudioStreamPlayer" method="Play"]
+[connection signal="mouse_entered" from="GridContainer/Button8" to="AudioStreamPlayer" method="Play"]
 [connection signal="pressed" from="GridContainer/Button8" to="." method="changeLevel" binds= [ 8 ]]
 [connection signal="focus_entered" from="GridContainer/Button9" to="AudioStreamPlayer" method="Play"]
+[connection signal="mouse_entered" from="GridContainer/Button9" to="AudioStreamPlayer" method="Play"]
 [connection signal="pressed" from="GridContainer/Button9" to="." method="changeLevel" binds= [ 9 ]]
 [connection signal="focus_entered" from="GridContainer/Button10" to="AudioStreamPlayer" method="Play"]
+[connection signal="mouse_entered" from="GridContainer/Button10" to="AudioStreamPlayer" method="Play"]
 [connection signal="pressed" from="GridContainer/Button10" to="." method="changeLevel" binds= [ 10 ]]
