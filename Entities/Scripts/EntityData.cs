@@ -17,6 +17,7 @@ public class BlobData : EntityData
 {
     public BlobElement element;
     public BlobData[] connected;
+    public BlobElement buffer = BlobElement.NONE;
     
     public int countConnections()
     {
@@ -60,10 +61,10 @@ public class BlobData : EntityData
         switch(element)
         {
             case BlobElement.NEW_ICE:
-                level.entityNodes[this].Call("ChangeElement", BlobElement.ICE);
+                buffer = BlobElement.ICE;
                 break;
             case BlobElement.BOX_BURNING_INIT:
-                level.entityNodes[this].Call("ChangeElement", BlobElement.BOX_BURNING);
+                buffer = BlobElement.BOX_BURNING;
                 break;
             case BlobElement.GRASS_BURNING:
                 deathFlag = true;
@@ -84,8 +85,11 @@ public class BlobData : EntityData
     {
         if(element == BlobElement.PRE_WATER)
         {
-            level.entityNodes[this].Call("ChangeElement", BlobElement.WATER);
+            buffer = BlobElement.WATER;
         }
+        if(buffer != BlobElement.NONE)
+            level.entityNodes[this].Call("ChangeElement", buffer);
+        buffer = BlobElement.NONE;
     }
 
     public override void UpdateTurn()
@@ -108,15 +112,11 @@ public class BlobData : EntityData
             case BlobElement.STONE:
                 break;
             case BlobElement.FIRE:
-                //if(neighborElements.Contains(BlobElement.WATER))
-                //{
-                //    deathFlag = true;
-                //}
                 break;
             case BlobElement.WATER:
                 if(neighborElements.Contains(BlobElement.ICE))
                 {
-                    level.entityNodes[this].Call("ChangeElement", BlobElement.NEW_ICE);
+                    buffer = BlobElement.NEW_ICE;
 
                     if(level.players.Contains(this))
                     {
@@ -128,37 +128,37 @@ public class BlobData : EntityData
                 if((neighborElements.Contains(BlobElement.FIRE) || neighborElements.Contains(BlobElement.BOX_BURNING) || neighborElements.Contains(BlobElement.GRASS_BURNING))
                    && !neighborElements.Contains(BlobElement.WATER))
                 {
-                    level.entityNodes[this].Call("ChangeElement", BlobElement.GRASS_BURNING_INIT);
+                    buffer = BlobElement.GRASS_BURNING_INIT;
                 }
                 else if (neighborElements.Contains(BlobElement.WATER))
                 {
-                    level.entityNodes[this].Call("ChangeElement", BlobElement.GRASS);
+                    buffer = BlobElement.GRASS;
                 }
                 break;
             case BlobElement.GRASS_BURNING_INIT:
                 if (neighborElements.Contains(BlobElement.WATER))
                 {
-                    level.entityNodes[this].Call("ChangeElement", BlobElement.GRASS);
+                    buffer = BlobElement.GRASS;
                 }
                 else
                 {
-                    level.entityNodes[this].Call("ChangeElement", BlobElement.GRASS_BURNING);
+                    buffer = BlobElement.GRASS_BURNING;
                 }
                 break;
             case BlobElement.BOX_BURNING_INIT:
                 if (neighborElements.Contains(BlobElement.WATER))
                 {
-                    level.entityNodes[this].Call("ChangeElement", BlobElement.BOX);
+                    buffer = BlobElement.BOX;
                 }
                 else
                 {
-                    level.entityNodes[this].Call("ChangeElement", BlobElement.BOX_BURNING);
+                    buffer = BlobElement.BOX_BURNING;
                 }
                 break;
             case BlobElement.GRASS_BURNING:
                 if (neighborElements.Contains(BlobElement.WATER))
                 {
-                    level.entityNodes[this].Call("ChangeElement", BlobElement.GRASS);
+                    buffer = BlobElement.GRASS;
                     deathFlag = false;
                 }
                 break;
@@ -166,29 +166,29 @@ public class BlobData : EntityData
                 if ((neighborElements.Contains(BlobElement.FIRE) || neighborElements.Contains(BlobElement.BOX_BURNING) || neighborElements.Contains(BlobElement.GRASS_BURNING))
                     && !neighborElements.Contains(BlobElement.WATER))
                 {
-                    level.entityNodes[this].Call("ChangeElement", BlobElement.BOX_BURNING_INIT);
+                    buffer = BlobElement.BOX_BURNING_INIT;
                 }
                 break;
             case BlobElement.ICE:
                 if (neighborElements.Contains(BlobElement.FIRE))
                 {
-                    level.entityNodes[this].Call("ChangeElement", BlobElement.WATER);
+                    buffer = BlobElement.WATER;
                 }
                 break;
             case BlobElement.NEW_ICE:
                 if (neighborElements.Contains(BlobElement.FIRE))
                 {
-                    level.entityNodes[this].Call("ChangeElement", BlobElement.WATER);
+                    buffer = BlobElement.WATER;
                 }
                 else
                 {
-                    level.entityNodes[this].Call("ChangeElement", BlobElement.ICE);
+                    buffer = BlobElement.ICE;
                 }
                 break;
             case BlobElement.BOX_BURNING:
                 if (neighborElements.Contains(BlobElement.WATER))
                 {
-                    level.entityNodes[this].Call("ChangeElement", BlobElement.BOX);
+                    buffer = BlobElement.BOX;
                 }
                 break;
         }

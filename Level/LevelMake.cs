@@ -5,9 +5,11 @@ using System.Text;
 public class LevelMake : Control
 {
     public static string levelString = "";
+    public ErrorString es;
 
     public override void _Ready()
     {
+        es = GetNode<ErrorString>("ErrorString");
         if(levelString == "")
         {
             levelString =
@@ -33,7 +35,11 @@ public class LevelMake : Control
 
     public void play()
     {
-        GetTree().ChangeScene("res://Level/Levels/LevelMakeLevel.tscn");
+        string valid = validateLevelString(levelString);
+        if(valid == "")
+            GetTree().ChangeScene("res://Level/Levels/LevelMakeLevel.tscn");
+        else
+            es.show(valid);
     }
 
     public void textChange(string text, int line)
@@ -59,9 +65,39 @@ public class LevelMake : Control
         OS.Clipboard = levelString;
     }
 
+    public string validateLevelString(string level)
+    {
+        if(level.Length < 220)
+        {
+            return "Level text too short!";
+        }
+        if(level.Length > 220)
+        {
+            return "Level text too long!";
+        }
+        foreach(char c in level)
+        {
+            if(c == '0' || c == ' ' || c == 'F' || c == 'W' || c == 'G' || c == 'S' || c == 'f' || c == 'w' || c == 'g' || c == 's' || c == 'b' || c == 'i' || c == 'v' || c == 'V')
+            {
+                continue;
+            }
+            return "Invalid character \'" + c + "\'!";
+        }
+        return "";
+    }
+
     public void paste()
     {
-        levelString = OS.Clipboard;
-        populateText();
+        string temp = OS.Clipboard;
+        string valid = validateLevelString(temp);
+        if(valid == "")
+        {
+            levelString = temp;
+            populateText();
+        }
+        else
+        {
+            es.show(valid);
+        }
     }
 }
