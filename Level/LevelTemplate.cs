@@ -13,11 +13,13 @@ public class LevelTemplate : LevelController
 {
     public override void _Ready()
     {
+        base._Ready();
+
         currentLevel = 
 "00000000000000000000" +
 "0                  0" +
 "0       00         0" +
-"0   0              0" +
+"0   g         V    0" +
 "0                  0" +
 "0       F   00     0" +
 "0                  0" +

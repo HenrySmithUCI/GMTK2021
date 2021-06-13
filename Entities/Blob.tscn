@@ -102,4 +102,6 @@ process_material = SubResource( 14 )
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.6
 one_shot = true
+
+[node name="Tween" type="Tween" parent="."]
 [connection signal="timeout" from="Timer" to="." method="selfDelete"]

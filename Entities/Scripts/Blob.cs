@@ -16,11 +16,13 @@ public class Blob : Node2D
 
     private Sprite sprite;
     private Particles2D particles;
+    private Tween tween;
 
     public override void _Ready()
     {
         sprite = GetNode<Sprite>("Sprite");
         particles = GetNode<Particles2D>("Particles");
+        tween = GetNode<Tween>("Tween");
         ChangeElement(data.element);
         Position = data.position * 16;
     }
@@ -77,7 +79,9 @@ public class Blob : Node2D
 
     public void Move(Vector2 dir)
     {
-        Position = data.position * 16;
+        tween.InterpolateProperty(this, "position", Position, data.position * 16, 0.1f, (Godot.Tween.TransitionType)1);
+        tween.Start();
+        //Position = data.position * 16;
     }
 
     public void die()
