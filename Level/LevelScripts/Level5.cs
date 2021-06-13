@@ -17,17 +17,17 @@ public class Level5 : LevelController
 
         levelNum = 5;
 
-        currentLevel = 
+        currentLevel =
 "00000000000000000000" +
-"0                  0" +
-"0                  0" +
-"0                  0" +
-"0                  0" +
-"0    S        V    0" +
-"0                  0" +
-"0                  0" +
-"0                  0" +
-"0                  0" +
+"000w          0wwww0" +
+"0g0           0000w0" +
+"0 000000         0w0" +
+"0    S        v  0w0" +
+"0    f        v  0w0" +
+"0    f        V  0w0" +
+"0 000000      v  ww0" +
+"0g0                0" +
+"000w               0" +
 "00000000000000000000";
 
         setUpLevel(currentLevel);
