@@ -204,8 +204,8 @@ margin_right = 132.0
 margin_bottom = 15.0
 rect_scale = Vector2( 0.5, 0.5 )
 text = "Created by:
-iahurd
-Dayliss413"
+Dayliss413
+iahurd"
 __meta__ = {
 "_edit_use_anchors_": false
 }
