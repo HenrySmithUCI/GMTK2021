@@ -8,6 +8,7 @@ public abstract class EntityData
     public Vector2 position;
     public virtual void UpdateTurn() {}
     public virtual void PreUpdate() {}
+    public virtual void PostUpdate() {}
     public bool deathFlag = false;
     public bool isPlayer = false;
 }
@@ -36,6 +37,12 @@ public class BlobData : EntityData
 
     public override void PreUpdate()
     {
+        HashSet<BlobElement> neighborElements = new HashSet<BlobElement>();
+        for(int i = 0; i < connected.Length; i++)
+        {
+            if(connected[i] != null)
+                neighborElements.Add(connected[i].element);
+        }
         switch(element)
         {
             case BlobElement.NEW_ICE:
@@ -53,6 +60,20 @@ public class BlobData : EntityData
             case BlobElement.BOX_BURNING:
                 deathFlag = true;
                 break;
+            case BlobElement.FIRE:
+                if(neighborElements.Contains(BlobElement.WATER))
+                {
+                    deathFlag = true;
+                }
+                break;
+        }
+    }
+
+    public override void PostUpdate()
+    {
+        if(element == BlobElement.PRE_WATER)
+        {
+            level.entityNodes[this].Call("ChangeElement", BlobElement.WATER);
         }
     }
 
@@ -85,10 +106,10 @@ public class BlobData : EntityData
             case BlobElement.STONE:
                 break;
             case BlobElement.FIRE:
-                if(neighborElements.Contains(BlobElement.WATER))
-                {
-                    deathFlag = true;
-                }
+                //if(neighborElements.Contains(BlobElement.WATER))
+                //{
+                //    deathFlag = true;
+                //}
                 break;
             case BlobElement.WATER:
                 if(neighborElements.Contains(BlobElement.ICE))
@@ -151,7 +172,7 @@ public class BlobData : EntityData
     }
 }
 
-public enum BlobElement {STONE, FIRE, WATER, GRASS, BOX, ICE, BOX_BURNING, GRASS_BURNING, NEW_ICE, BOX_BURNING_INIT, GRASS_BURNING_INIT}
+public enum BlobElement {STONE, FIRE, WATER, GRASS, BOX, ICE, BOX_BURNING, GRASS_BURNING, NEW_ICE, BOX_BURNING_INIT, GRASS_BURNING_INIT, PRE_WATER}
 public enum Direction {UP, RIGHT, DOWN, LEFT}
 
 
