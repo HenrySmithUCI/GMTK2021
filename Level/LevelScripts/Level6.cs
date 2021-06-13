@@ -19,15 +19,15 @@ public class Level6 : LevelController
 
         currentLevel = 
 "00000000000000000000" +
-"0                  0" +
-"0                  0" +
-"0                  0" +
-"0                  0" +
-"0    S        V    0" +
-"0                  0" +
-"0                  0" +
-"0                  0" +
-"0                  0" +
+"0sbbbbb0 s0  0   bw0" +
+"0bbbbb00bb0  0   bb0" +
+"00000b00     0     0" +
+"0   0        0vv   0" +
+"0 F b        0Vvs  0" +
+"0   0              0" +
+"0000000            0" +
+"0bbb00b      bb    0" +
+"0gsbbbb     bwgb   0" +
 "00000000000000000000";
 
         setUpLevel(currentLevel);
