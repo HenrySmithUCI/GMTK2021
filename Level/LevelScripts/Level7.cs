@@ -27,7 +27,7 @@ public class Level7 : LevelController
 "0F                 0" +
 "0bbbbbbbbbbbbbbbbbb0" +
 "0                  0" +
-"0                  0" +
+"00000000000000000000" +
 "00000000000000000000";
 
         setUpLevel(currentLevel);
