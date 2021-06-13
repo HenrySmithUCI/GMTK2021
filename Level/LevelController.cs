@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class LevelController : TileMap
 {
+    public static int levelNum;
+
     [Export]
     public PackedScene blobScene = null;
 
@@ -15,6 +17,7 @@ public class LevelController : TileMap
     public List<string> undoList = new List<string>();
     public string currentLevel;
     public float undoTimer = 0.5f;
+    public bool victory = false;
 
     // player is always entities[0]
     //public BoxData[] entities;
@@ -53,8 +56,30 @@ public class LevelController : TileMap
             for(int x = 0; x < width; ++x)
             {
                 Tile t = getTile(new Vector2(x,y));
-                if(t.isBlock)
-                    ret += "0";
+                if(t.type != TileType.NONE)
+                {
+                    switch(t.type)
+                    {
+                        case TileType.BLOCK:
+                            ret += "0";
+                            break;
+                        case TileType.VICTORY:
+                            ret += "v";
+                            break;
+                        case TileType.VICTORY_PLAYER:
+                            ret += "V";
+                            break;
+                        case TileType.CONVERT_FIRE:
+                            ret += "1";
+                            break;
+                        case TileType.CONVERT_GRASS:
+                            ret += "3";
+                            break;
+                        case TileType.CONVERT_WATER:
+                            ret += "2";
+                            break;
+                    }
+                }
                 else if(t.entity == null)
                     ret += " ";
                 else
@@ -128,14 +153,39 @@ public class LevelController : TileMap
                 switch(c)
                 {
                     case ' ':
-                        tiles[x,y] = new Tile(false);
+                        tiles[x,y] = new Tile(TileType.NONE);
                         if(newLevel)
                             SetCell(x, y, 0);
                     break;
                     case '0':
-                        tiles[x,y] = new Tile(true);
+                        tiles[x,y] = new Tile(TileType.BLOCK);
                         if(newLevel)
                             SetCell(x, y, 1);
+                        break;
+                    case 'v':
+                        tiles[x,y] = new Tile(TileType.VICTORY);
+                        if(newLevel)
+                            SetCell(x, y, 2);
+                        break;
+                    case 'V':
+                        tiles[x,y] = new Tile(TileType.VICTORY_PLAYER);
+                        if(newLevel)
+                            SetCell(x, y, 3);
+                        break;
+                    case '1':
+                        tiles[x,y] = new Tile(TileType.CONVERT_FIRE);
+                        if(newLevel)
+                            SetCell(x, y, 6);
+                        break;
+                    case '2':
+                        tiles[x,y] = new Tile(TileType.CONVERT_WATER);
+                        if(newLevel)
+                            SetCell(x, y, 5);
+                        break;
+                    case '3':
+                        tiles[x,y] = new Tile(TileType.CONVERT_GRASS);
+                        if(newLevel)
+                            SetCell(x, y, 4);
                         break;
                     case 'g':
                     case 'w':
@@ -149,7 +199,7 @@ public class LevelController : TileMap
                     case '`':
                     case '~':
                         entities.Add(new BlobData(new Vector2(x,y), charToElement(c)));
-                        tiles[x,y] = new Tile(false);
+                        tiles[x,y] = new Tile(TileType.NONE);
                         if(newLevel)
                             SetCell(x, y, 0);
                         break;
@@ -158,7 +208,7 @@ public class LevelController : TileMap
                     case 'F':
                     case 'S':
                         entities.Add(new BlobData(new Vector2(x,y), charToElement(char.ToLower(c)), true));
-                        tiles[x,y] = new Tile(false);
+                        tiles[x,y] = new Tile(TileType.NONE);
                         if(newLevel)
                             SetCell(x, y, 0);
                         break;
@@ -251,6 +301,8 @@ public class LevelController : TileMap
 
     public override void _Process(float delta)
     {
+        if(victory)
+            return;
         if (players.Count > 0)
         {
             if (Input.IsActionJustPressed("right"))
@@ -261,7 +313,6 @@ public class LevelController : TileMap
             {
                 move(new Vector2(-1, 0));
             }
-
             if (Input.IsActionJustPressed("up"))
             {
                 move(new Vector2(0, -1));
@@ -269,6 +320,10 @@ public class LevelController : TileMap
             else if (Input.IsActionJustPressed("down"))
             {
                 move(new Vector2(0, 1));
+            }
+            else if (Input.IsActionJustPressed("step"))
+            {
+                move(new Vector2(0, 0));
             }
         }
 
@@ -407,6 +462,35 @@ public class LevelController : TileMap
                 }
             }
         }
+
+        if(checkVictory())
+        {
+            victory = true;
+            UI.instance.showWin();
+        }
+    }
+
+    public bool checkVictory()
+    {
+        bool victory = true;
+        foreach(Vector2 vec in GetUsedCellsById((int)TileType.VICTORY))
+        {
+            if(getTile(vec).entity == null || getTile(vec).entity.isPlayer)
+            {
+                victory = false;
+                break;
+            }
+        }
+        if(victory)
+            foreach(Vector2 vec in GetUsedCellsById((int)TileType.VICTORY_PLAYER))
+            {
+                if(getTile(vec).entity == null || getTile(vec).entity.isPlayer == false)
+                {
+                    victory = false;
+                    break;
+                }
+            }
+        return victory;
     }
 
     // checks if a specific tile is empty
@@ -415,7 +499,7 @@ public class LevelController : TileMap
     private bool checkFree(Vector2 pos, HashSet<BlobData> active)
     {
         Tile tile = getTile(pos);
-        if(tile == null || tile.isBlock)
+        if(tile == null || tile.type == TileType.BLOCK)
             return false;
         if(tile.entity != null)
         {
