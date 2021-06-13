@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2A47127A-AE00-4C21-B365-56AF834F2D89}</ProjectGuid>
+    <ProjectGuid>{0C3C3B2B-D944-4B28-AD53-B1A1C27EBBF6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <OutputPath>.mono\temp\bin\$(Configuration)</OutputPath>
-    <RootNamespace>JoinedTogether</RootNamespace>
-    <AssemblyName>Joined Together</AssemblyName>
+    <RootNamespace>Blobement</RootNamespace>
+    <AssemblyName>Blobement</AssemblyName>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <GodotProjectGeneratorVersion>1.0.0.0</GodotProjectGeneratorVersion>
     <BaseIntermediateOutputPath>.mono\temp\obj</BaseIntermediateOutputPath>
@@ -57,7 +57,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include=".prop\AssemblyInfo.cs" />
+	<Compile Include=".prop\AssemblyInfo.cs" />
     <Compile Include="Entities\Scripts\Blob.cs" />
     <Compile Include="Entities\Scripts\EntityData.cs" />
     <Compile Include="Ian\Key.cs" />
