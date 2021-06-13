@@ -43,7 +43,8 @@ public class LevelController : TileMap
             return;
         turnNumber -= 1;
         destroyLevel();
-        setUpLevel(undoList[0], false);
+        string temp = undoList[0].Replace('w','*');
+        setUpLevel(temp, false);
         undoList.RemoveAt(0);
     }
 
@@ -95,6 +96,9 @@ public class LevelController : TileMap
                             break;
                         case BlobElement.WATER:
                             c = 'w';
+                            break;
+                        case BlobElement.PRE_WATER:
+                            c = '*';
                             break;
                         case BlobElement.STONE:
                             c = 's';
@@ -191,6 +195,7 @@ public class LevelController : TileMap
                     case 'f':
                     case 's':
                     case 'i':
+                    case '*':
                     case 'b':
                     case ']':
                     case '[':
@@ -251,11 +256,8 @@ public class LevelController : TileMap
             }
             getTile(entity.position).entity = entity;
         }
-		
-		foreach(EntityData entity in entities)
-        {
-            entity.UpdateTurn();
-        }
+
+        updateEntities();
     }
 
     public BlobElement charToElement(char type)
@@ -284,6 +286,8 @@ public class LevelController : TileMap
                 return BlobElement.BOX_BURNING_INIT;
             case '`':
                 return BlobElement.GRASS_BURNING_INIT;
+            case '*':
+                return BlobElement.PRE_WATER;
             default:
                 return BlobElement.STONE;
         }
@@ -382,6 +386,41 @@ public class LevelController : TileMap
         return connected;
     }
 
+    public void updateEntities()
+    {
+        foreach(EntityData entity in entities)
+        {
+            entity.PreUpdate();
+        }
+
+        foreach(EntityData entity in entities)
+        {
+            entity.UpdateTurn();
+        }
+
+        foreach(EntityData entity in entities)
+        {
+            entity.PostUpdate();
+        }
+
+        List<EntityData> dupe = new List<EntityData>(entities);
+        foreach(EntityData entity in dupe)
+        {
+            if (entity.deathFlag == true)
+            {
+                getTile(entity.position).entity = null;
+                entityNodes[entity].Call("die");
+                entityNodes.Remove(entity);
+                entities.Remove(entity);
+
+                if(entity.isPlayer && players.Contains((BlobData)entity))
+                {
+                    players.Remove((BlobData)entity);
+                }
+            }
+        }
+    }
+
     // should handle combining, only handles player movement atm
     protected void move(Vector2 dir)
     {
@@ -436,32 +475,7 @@ public class LevelController : TileMap
             }
         }
 
-        foreach(EntityData entity in entities)
-        {
-            entity.PreUpdate();
-        }
-
-        foreach(EntityData entity in entities)
-        {
-            entity.UpdateTurn();
-        }
-
-        List<EntityData> dupe = new List<EntityData>(entities);
-        foreach(EntityData entity in dupe)
-        {
-            if (entity.deathFlag == true)
-            {
-                getTile(entity.position).entity = null;
-                entityNodes[entity].Call("die");
-                entityNodes.Remove(entity);
-                entities.Remove(entity);
-
-                if(entity.isPlayer && players.Contains((BlobData)entity))
-                {
-                    players.Remove((BlobData)entity);
-                }
-            }
-        }
+        updateEntities();
 
         if(checkVictory())
         {
@@ -473,8 +487,10 @@ public class LevelController : TileMap
     public bool checkVictory()
     {
         bool victory = true;
+        bool tilesExist = false;
         foreach(Vector2 vec in GetUsedCellsById((int)TileType.VICTORY))
         {
+            tilesExist = true;
             if(getTile(vec).entity == null || getTile(vec).entity.isPlayer)
             {
                 victory = false;
@@ -484,13 +500,14 @@ public class LevelController : TileMap
         if(victory)
             foreach(Vector2 vec in GetUsedCellsById((int)TileType.VICTORY_PLAYER))
             {
+                tilesExist = true;
                 if(getTile(vec).entity == null || getTile(vec).entity.isPlayer == false)
                 {
                     victory = false;
                     break;
                 }
             }
-        return victory;
+        return victory && tilesExist;
     }
 
     // checks if a specific tile is empty
@@ -508,6 +525,7 @@ public class LevelController : TileMap
                 return active.Contains(blob) && blob.element != BlobElement.ICE && blob.element != BlobElement.NEW_ICE && blob.element != BlobElement.BOX_BURNING && blob.element != BlobElement.BOX_BURNING_INIT;
             }
         }
+
         return true;
     }
 }
