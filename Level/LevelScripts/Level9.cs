@@ -23,11 +23,11 @@ public class Level9 : LevelController
 "0                  0" +
 "0                  0" +
 "0                  0" +
-"0    S        V    0" +
 "0                  0" +
 "0                  0" +
 "0                  0" +
 "0                  0" +
+"0 W                0" +
 "00000000000000000000";
 
         setUpLevel(currentLevel);
