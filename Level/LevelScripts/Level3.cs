@@ -19,15 +19,15 @@ public class Level3 : LevelController
 
         currentLevel = 
 "00000000000000000000" +
-"0                  0" +
-"0    f    w        0" +
-"0      w g         0" +
-"0            vv    0" +
-"0      i     Vv    0" +
-"0    G             0" +
-"0                  0" +
-"0                  0" +
-"0                  0" +
+"00         000    00" +
+"0w          0      0" +
+"0        w  0      0" +
+"0G             v   0" +
+"000      f    vVv  0" +
+"000f 00            0" +
+"0000 f0  g  0      0" +
+"0000fv0     0      0" +
+"0000v00  s  00    00" +
 "00000000000000000000";
 
         setUpLevel(currentLevel);
