@@ -16,12 +16,14 @@ public class Blob : Node2D
 
     private Sprite sprite;
     private Particles2D particles;
+    private Particles2D halo;
     private Tween tween;
 
     public override void _Ready()
     {
         sprite = GetNode<Sprite>("Sprite");
         particles = GetNode<Particles2D>("Particles");
+        halo = GetNode<Particles2D>("Halo");
         tween = GetNode<Tween>("Tween");
         ChangeElement(data.element);
         Position = data.position * 16;
@@ -81,7 +83,18 @@ public class Blob : Node2D
     {
         tween.InterpolateProperty(this, "position", Position, data.position * 16, 0.1f, (Godot.Tween.TransitionType)1);
         tween.Start();
-        //Position = data.position * 16;
+        if(data.level.getTile(data.position).type == TileType.VICTORY_PLAYER && data.isPlayer)
+        {
+            halo.Emitting = true;
+        }
+        else if(data.level.getTile(data.position).type == TileType.VICTORY && data.isPlayer == false)
+        {
+            halo.Emitting = true;
+        }
+        else
+        {
+            halo.Emitting = false;
+        }
     }
 
     public void die()

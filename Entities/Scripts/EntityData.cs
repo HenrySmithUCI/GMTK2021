@@ -125,7 +125,9 @@ public class BlobData : EntityData
                 }
                 break;
             case BlobElement.GRASS:
-                if((neighborElements.Contains(BlobElement.FIRE) || neighborElements.Contains(BlobElement.BOX_BURNING) || neighborElements.Contains(BlobElement.GRASS_BURNING))
+                if((neighborElements.Contains(BlobElement.FIRE)
+                || neighborElements.Contains(BlobElement.BOX_BURNING_INIT) || neighborElements.Contains(BlobElement.GRASS_BURNING_INIT)
+                || neighborElements.Contains(BlobElement.BOX_BURNING) || neighborElements.Contains(BlobElement.GRASS_BURNING))
                    && !neighborElements.Contains(BlobElement.WATER))
                 {
                     buffer = BlobElement.GRASS_BURNING_INIT;
@@ -163,7 +165,9 @@ public class BlobData : EntityData
                 }
                 break;
             case BlobElement.BOX:
-                if ((neighborElements.Contains(BlobElement.FIRE) || neighborElements.Contains(BlobElement.BOX_BURNING) || neighborElements.Contains(BlobElement.GRASS_BURNING))
+                if ((neighborElements.Contains(BlobElement.FIRE)
+                || neighborElements.Contains(BlobElement.BOX_BURNING) || neighborElements.Contains(BlobElement.GRASS_BURNING)
+                || neighborElements.Contains(BlobElement.BOX_BURNING_INIT) || neighborElements.Contains(BlobElement.GRASS_BURNING_INIT))
                     && !neighborElements.Contains(BlobElement.WATER))
                 {
                     buffer = BlobElement.BOX_BURNING_INIT;

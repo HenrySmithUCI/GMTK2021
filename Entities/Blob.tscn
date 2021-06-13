@@ -133,7 +133,7 @@ one_shot = true
 
 [node name="Tween" type="Tween" parent="."]
 
-[node name="HaloParticles" type="Particles2D" parent="."]
+[node name="Halo" type="Particles2D" parent="."]
 modulate = Color( 0.686275, 0.74902, 0.823529, 1 )
 position = Vector2( 0.662165, 0.56284 )
 emitting = false

@@ -19,31 +19,31 @@ region = Rect2( 0, 16, 16, 16 )
 atlas = ExtResource( 3 )
 region = Rect2( 64, 0, 16, 16 )
 
-[sub_resource type="AtlasTexture" id=9]
+[sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 3 )
 region = Rect2( 64, 16, 16, 16 )
 
-[sub_resource type="AtlasTexture" id=3]
+[sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 3 )
 region = Rect2( 0, 16, 16, 16 )
 
-[sub_resource type="AtlasTexture" id=4]
+[sub_resource type="AtlasTexture" id=5]
 atlas = ExtResource( 3 )
 region = Rect2( 96, 0, 16, 16 )
 
-[sub_resource type="AtlasTexture" id=5]
-atlas = ExtResource( 3 )
-region = Rect2( 32, 16, 16, 16 )
-
 [sub_resource type="AtlasTexture" id=6]
 atlas = ExtResource( 3 )
-region = Rect2( 0, 32, 16, 16 )
+region = Rect2( 32, 16, 16, 16 )
 
 [sub_resource type="AtlasTexture" id=7]
 atlas = ExtResource( 3 )
-region = Rect2( 32, 16, 16, 16 )
+region = Rect2( 0, 32, 16, 16 )
 
 [sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 3 )
+region = Rect2( 32, 16, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=9]
 atlas = ExtResource( 3 )
 region = Rect2( 96, 16, 16, 16 )
 
@@ -84,7 +84,7 @@ texture = ExtResource( 6 )
 
 [node name="Sprite9" type="Sprite" parent="TileMap"]
 position = Vector2( 256, 96 )
-texture = SubResource( 9 )
+texture = SubResource( 3 )
 offset = Vector2( 8, 8 )
 
 [node name="Particles2D2" type="Particles2D" parent="TileMap/Sprite9"]
@@ -94,7 +94,7 @@ texture = ExtResource( 6 )
 
 [node name="Sprite3" type="Sprite" parent="TileMap"]
 position = Vector2( 160, 48 )
-texture = SubResource( 3 )
+texture = SubResource( 4 )
 offset = Vector2( 8, 8 )
 
 [node name="Particles2D3" type="Particles2D" parent="TileMap/Sprite3"]
@@ -104,12 +104,12 @@ texture = ExtResource( 7 )
 
 [node name="Sprite4" type="Sprite" parent="TileMap"]
 position = Vector2( 144, 48 )
-texture = SubResource( 4 )
+texture = SubResource( 5 )
 offset = Vector2( 8, 8 )
 
 [node name="Sprite6" type="Sprite" parent="TileMap"]
 position = Vector2( 272, 32 )
-texture = SubResource( 5 )
+texture = SubResource( 6 )
 offset = Vector2( 8, 8 )
 
 [node name="Particles2D3" type="Particles2D" parent="TileMap/Sprite6"]
@@ -119,12 +119,12 @@ texture = ExtResource( 5 )
 
 [node name="Sprite5" type="Sprite" parent="TileMap"]
 position = Vector2( 224, 32 )
-texture = SubResource( 6 )
+texture = SubResource( 7 )
 offset = Vector2( 8, 8 )
 
 [node name="Sprite7" type="Sprite" parent="TileMap"]
 position = Vector2( 256, 64 )
-texture = SubResource( 7 )
+texture = SubResource( 8 )
 offset = Vector2( 8, 8 )
 
 [node name="Particles2D3" type="Particles2D" parent="TileMap/Sprite7"]
@@ -134,7 +134,7 @@ texture = ExtResource( 5 )
 
 [node name="Sprite8" type="Sprite" parent="TileMap"]
 position = Vector2( 272, 96 )
-texture = SubResource( 8 )
+texture = SubResource( 9 )
 offset = Vector2( 8, 8 )
 
 [node name="Label" type="Label" parent="."]
@@ -156,19 +156,19 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -51.0
-margin_top = -90.0
-margin_right = 51.0
-margin_bottom = -16.0
+margin_left = -59.0
+margin_top = -94.0
+margin_right = 59.0
+margin_bottom = -20.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Play" type="Button" parent="VBoxContainer"]
-margin_right = 102.0
+margin_right = 118.0
 margin_bottom = 22.0
 focus_neighbour_top = NodePath("../Quit")
-focus_neighbour_bottom = NodePath("../Quit")
+focus_neighbour_bottom = NodePath("../Credit")
 text = "Play"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -176,20 +176,20 @@ __meta__ = {
 
 [node name="Credit" type="Button" parent="VBoxContainer"]
 margin_top = 26.0
-margin_right = 102.0
+margin_right = 118.0
 margin_bottom = 48.0
-focus_neighbour_top = NodePath("../Quit")
+focus_neighbour_top = NodePath("../Play")
 focus_neighbour_bottom = NodePath("../Quit")
-text = "Credit"
+text = "Credits"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Quit" type="Button" parent="VBoxContainer"]
 margin_top = 52.0
-margin_right = 102.0
+margin_right = 118.0
 margin_bottom = 74.0
-focus_neighbour_top = NodePath("../Play")
+focus_neighbour_top = NodePath("../Credit")
 focus_neighbour_bottom = NodePath("../Play")
 text = "Quit"
 __meta__ = {
@@ -203,9 +203,12 @@ margin_right = 71.0
 margin_bottom = 163.0
 
 [node name="PlaySelect" parent="." instance=ExtResource( 9 )]
+[connection signal="focus_entered" from="VBoxContainer/Play" to="PlaySelect" method="play"]
 [connection signal="mouse_entered" from="VBoxContainer/Play" to="PlaySelect" method="play"]
 [connection signal="pressed" from="VBoxContainer/Play" to="." method="switchToPlay"]
+[connection signal="focus_entered" from="VBoxContainer/Credit" to="PlaySelect" method="play"]
 [connection signal="mouse_entered" from="VBoxContainer/Credit" to="PlaySelect" method="play"]
 [connection signal="pressed" from="VBoxContainer/Credit" to="." method="switchToPlay"]
+[connection signal="focus_entered" from="VBoxContainer/Quit" to="PlaySelect" method="play"]
 [connection signal="mouse_entered" from="VBoxContainer/Quit" to="PlaySelect" method="play"]
 [connection signal="pressed" from="VBoxContainer/Quit" to="." method="quit"]
