@@ -21,7 +21,7 @@ public class UI : CanvasLayer
     {
         GetNode<Control>("WinLabel").Visible = true;
         GetNode<Control>("WinLabel").GetNode<HBoxContainer>("HBoxContainer").GetNode<Button>("Next").GrabFocus();
-        victorySound.Playing = true;
+        SoundController.instance.play("Victory");
     }
 
     public void next()

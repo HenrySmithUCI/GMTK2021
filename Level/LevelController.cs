@@ -19,15 +19,8 @@ public class LevelController : TileMap
     public float undoTimer = 0.5f;
     public bool victory = false;
 
-    protected AudioStreamPlayer moveSound;
-
     public int width = 20;
     public int height = 11;
-
-    public override void _Ready()
-    {
-        moveSound = GetNode<AudioStreamPlayer>("MoveSound");
-    }
 
     public void destroyLevel()
     {
@@ -257,7 +250,7 @@ public class LevelController : TileMap
             getTile(entity.position).entity = entity;
         }
 
-        updateEntities();
+        updateEntities(false);
     }
 
     public BlobElement charToElement(char type)
@@ -386,11 +379,14 @@ public class LevelController : TileMap
         return connected;
     }
 
-    public void updateEntities()
+    public void updateEntities(bool preUpdate)
     {
-        foreach(EntityData entity in entities)
+        if(preUpdate)
         {
-            entity.PreUpdate();
+            foreach(EntityData entity in entities)
+            {
+                entity.PreUpdate();
+            }
         }
 
         foreach(EntityData entity in entities)
@@ -425,7 +421,7 @@ public class LevelController : TileMap
     protected void move(Vector2 dir)
     {
         turnNumber += 1;
-        moveSound.Playing = true;
+        SoundController.instance.play("Move");
 
 		undoList.Insert(0, levelToString());
         HashSet<BlobData> seen = new HashSet<BlobData>();
@@ -475,7 +471,7 @@ public class LevelController : TileMap
             }
         }
 
-        updateEntities();
+        updateEntities(true);
 
         if(checkVictory())
         {

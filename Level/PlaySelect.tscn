@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Level/PlaySelect.cs" type="Script" id=1]
+
+[node name="PlaySelect" type="Node"]
+script = ExtResource( 1 )

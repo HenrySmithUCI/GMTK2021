@@ -1,10 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Level/Tiles.tres" type="TileSet" id=1]
 [ext_resource path="res://Level/LevelScripts/LevelTemplate.cs" type="Script" id=2]
 [ext_resource path="res://Entities/Blob.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Ian/UI.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Sounds/move.wav" type="AudioStream" id=5]
 
 [node name="LevelTemplate" type="TileMap"]
 tile_set = ExtResource( 1 )
@@ -18,7 +17,3 @@ blobScene = ExtResource( 3 )
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
 current = true
-
-[node name="MoveSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 5 )
-bus = "Effects"

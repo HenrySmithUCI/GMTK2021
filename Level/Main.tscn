@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Level/Main.cs" type="Script" id=1]
 [ext_resource path="res://Sophia/CustomTheme.tres" type="Theme" id=2]
@@ -8,8 +8,7 @@
 [ext_resource path="res://Sophia/Grass.png" type="Texture" id=6]
 [ext_resource path="res://Sophia/Fire.png" type="Texture" id=7]
 [ext_resource path="res://Entities/FireParticles.tres" type="Material" id=8]
-[ext_resource path="res://Sounds/select.wav" type="AudioStream" id=9]
-[ext_resource path="res://Sounds/Sound.cs" type="Script" id=10]
+[ext_resource path="res://Level/PlaySelect.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Ian/MuteButtons.tscn" type="PackedScene" id=11]
 
 [sub_resource type="AtlasTexture" id=1]
@@ -172,19 +171,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 9 )
-bus = "Effects"
-script = ExtResource( 10 )
-
 [node name="HBoxContainer" parent="." instance=ExtResource( 11 )]
 margin_left = 19.0
 margin_top = 123.0
 margin_right = 71.0
 margin_bottom = 163.0
-[connection signal="focus_entered" from="VBoxContainer/Play" to="AudioStreamPlayer" method="Play"]
-[connection signal="mouse_entered" from="VBoxContainer/Play" to="AudioStreamPlayer" method="Play"]
+
+[node name="PlaySelect" parent="." instance=ExtResource( 9 )]
+[connection signal="mouse_entered" from="VBoxContainer/Play" to="PlaySelect" method="play"]
 [connection signal="pressed" from="VBoxContainer/Play" to="." method="switchToPlay"]
-[connection signal="focus_entered" from="VBoxContainer/Quit" to="AudioStreamPlayer" method="Play"]
-[connection signal="mouse_entered" from="VBoxContainer/Quit" to="AudioStreamPlayer" method="Play"]
+[connection signal="mouse_entered" from="VBoxContainer/Quit" to="PlaySelect" method="play"]
 [connection signal="pressed" from="VBoxContainer/Quit" to="." method="quit"]
