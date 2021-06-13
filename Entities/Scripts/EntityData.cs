@@ -116,7 +116,7 @@ public class BlobData : EntityData
             case BlobElement.WATER:
                 if(neighborElements.Contains(BlobElement.ICE))
                 {
-                    buffer = BlobElement.NEW_ICE;
+                    buffer = BlobElement.ICE;
 
                     if(level.players.Contains(this))
                     {
