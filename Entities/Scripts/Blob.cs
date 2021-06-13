@@ -45,6 +45,10 @@ public class Blob : Node2D
                 SetTexture((int)BlobElement.ICE);
                 SetParticles((int)BlobElement.ICE);
                 break;
+            case BlobElement.PRE_WATER:
+                SetTexture((int)BlobElement.WATER);
+                SetParticles((int)BlobElement.WATER);
+                break;
             default:
                 SetTexture((int)element);
                 SetParticles((int)element);
