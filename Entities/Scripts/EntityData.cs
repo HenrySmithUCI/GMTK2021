@@ -43,7 +43,7 @@ public class BlobData : EntityData
         {
             Tile tile = level.getTile(position + dirs[i]);
             if(tile != null && tile.entity != null && tile.entity is BlobData blob 
-               && ((BlobData)tile.entity).element != BlobElement.BOX)
+               && blob.element != BlobElement.BOX && blob.element != BlobElement.BOX_BURNING_INIT)
                 connected[i] = blob;
             else
                 connected[i] = null;
