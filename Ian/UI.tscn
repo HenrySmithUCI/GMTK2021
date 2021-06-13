@@ -157,6 +157,8 @@ __meta__ = {
 [node name="Back" type="Button" parent="WinLabel/HBoxContainer"]
 margin_right = 70.0
 margin_bottom = 22.0
+focus_neighbour_left = NodePath("../Next")
+focus_neighbour_right = NodePath("../Next")
 text = "Back"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -166,6 +168,8 @@ __meta__ = {
 margin_left = 74.0
 margin_right = 144.0
 margin_bottom = 22.0
+focus_neighbour_left = NodePath("../Back")
+focus_neighbour_right = NodePath("../Back")
 text = "Next"
 __meta__ = {
 "_edit_use_anchors_": false
