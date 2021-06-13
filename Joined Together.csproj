@@ -60,6 +60,7 @@
     <Compile Include=".prop\AssemblyInfo.cs" />
     <Compile Include="Entities\Scripts\Blob.cs" />
     <Compile Include="Entities\Scripts\EntityData.cs" />
+    <Compile Include="Ian\Key.cs" />
     <Compile Include="Ian\MuteButtons.cs" />
     <Compile Include="Ian\UI.cs" />
     <Compile Include="Level\ErrorString.cs" />
