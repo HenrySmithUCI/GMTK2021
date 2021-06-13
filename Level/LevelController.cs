@@ -2,6 +2,13 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
+public struct TileData
+{
+    public TileType tileType;
+    public BlobElement element;
+    public bool isPlayer;
+}
+
 public class LevelController : TileMap
 {
     public static int levelNum;
@@ -14,10 +21,11 @@ public class LevelController : TileMap
     public Dictionary<EntityData, Node2D> entityNodes;
     public List<BlobData> players;
     public int turnNumber = 0;
-    public List<string> undoList = new List<string>();
+    public List<TileData[]> undoList = new List<TileData[]>();
     public string currentLevel;
     public float undoTimer = 0.5f;
     public bool victory = false;
+    public string backScene = "res://Level/LevelSelect.tscn";
 
     public int width = 20;
     public int height = 11;
@@ -36,104 +44,126 @@ public class LevelController : TileMap
             return;
         turnNumber -= 1;
         destroyLevel();
-        string temp = undoList[0].Replace('w','*');
-        setUpLevel(temp, false);
+        //string temp = undoList[0].Replace('w','*');
+        setUpLevel(undoList[0], false);
         undoList.RemoveAt(0);
     }
 
-    public string levelToString()
+    public TileData[] levelToData()
     {
-        string ret = "";
+        TileData[] ret = new TileData[220];
         for(int y = 0; y < height; ++y)
         {
             for(int x = 0; x < width; ++x)
             {
                 Tile t = getTile(new Vector2(x,y));
-                if(t.type != TileType.NONE)
+                TileData data = new TileData();
+                data.tileType = t.type;
+                if(t.entity == null)
                 {
-                    switch(t.type)
-                    {
-                        case TileType.BLOCK:
-                            ret += "0";
-                            break;
-                        case TileType.VICTORY:
-                            ret += "v";
-                            break;
-                        case TileType.VICTORY_PLAYER:
-                            ret += "V";
-                            break;
-                        case TileType.CONVERT_FIRE:
-                            ret += "1";
-                            break;
-                        case TileType.CONVERT_GRASS:
-                            ret += "3";
-                            break;
-                        case TileType.CONVERT_WATER:
-                            ret += "2";
-                            break;
-                    }
+                    data.element = BlobElement.NONE;
+                    data.isPlayer = false;
                 }
-                else if(t.entity == null)
-                    ret += " ";
                 else
                 {
-                    BlobData blob = (BlobData)t.entity;
-                    char c;
-                    switch(blob.element)
-                    {
-                        case BlobElement.BOX:
-                            c = 'b';
-                            break;
-                        case BlobElement.FIRE:
-                            c = 'f';
-                            break;
-                        case BlobElement.WATER:
-                            c = 'w';
-                            break;
-                        case BlobElement.PRE_WATER:
-                            c = '*';
-                            break;
-                        case BlobElement.STONE:
-                            c = 's';
-                            break;
-                        case BlobElement.GRASS:
-                            c = 'g';
-                            break;
-                        case BlobElement.ICE:
-                            c = 'i';
-                            break;
-                        case BlobElement.BOX_BURNING:
-                            c = ']';
-                            break;
-                        case BlobElement.GRASS_BURNING:
-                            c ='[';
-                            break;
-                        case BlobElement.NEW_ICE:
-                            c ='\\';
-                            break;
-                        case BlobElement.BOX_BURNING_INIT:
-                            c='~';
-                            break;
-                        case BlobElement.GRASS_BURNING_INIT:
-                            c='`';
-                            break;
-                        default:
-                            c = 's';
-                            break;
-                        
-                    }
-                    if(t.entity.isPlayer)
-                    {
-                        c = char.ToUpper(c);
-                    }
-                    ret += c;
+                    data.element = ((BlobData)t.entity).element;
+                    data.isPlayer = t.entity.isPlayer;
                 }
+                ret[y*width+x] = data;
             }
         }
         return ret;
     }
 
     protected void setUpLevel(string levelString, bool newLevel = true)
+    {
+        TileData[] data = new TileData[220];
+        for(int y = 0; y < height; y++)
+        {
+            for(int x = 0; x < width; x++)
+            {
+                char c = levelString[y*width+x];
+                TileData dataNew = new TileData();
+                switch(c)
+                {
+                    case ' ':
+                        dataNew.element = BlobElement.NONE;
+                        dataNew.isPlayer = false;
+                        dataNew.tileType = TileType.NONE;
+                        break;
+                    case '0':
+                        dataNew.element = BlobElement.NONE;
+                        dataNew.isPlayer = false;
+                        dataNew.tileType = TileType.BLOCK;
+                        break;
+                    case 'v':
+                        dataNew.element = BlobElement.NONE;
+                        dataNew.isPlayer = false;
+                        dataNew.tileType = TileType.VICTORY;
+                        break;
+                    case 'V':
+                        dataNew.element = BlobElement.NONE;
+                        dataNew.isPlayer = false;
+                        dataNew.tileType = TileType.VICTORY_PLAYER;
+                        break;
+                    case 'f':
+                        dataNew.element = BlobElement.FIRE;
+                        dataNew.isPlayer = false;
+                        dataNew.tileType = TileType.NONE;
+                        break;
+                    case 'w':
+                        dataNew.element = BlobElement.WATER;
+                        dataNew.isPlayer = false;
+                        dataNew.tileType = TileType.NONE;
+                        break;
+                    case 'g':
+                        dataNew.element = BlobElement.GRASS;
+                        dataNew.isPlayer = false;
+                        dataNew.tileType = TileType.NONE;
+                        break;
+                    case 's':
+                        dataNew.element = BlobElement.STONE;
+                        dataNew.isPlayer = false;
+                        dataNew.tileType = TileType.NONE;
+                        break;
+                    case 'F':
+                        dataNew.element = BlobElement.FIRE;
+                        dataNew.isPlayer = true;
+                        dataNew.tileType = TileType.NONE;
+                        break;
+                    case 'W':
+                        dataNew.element = BlobElement.WATER;
+                        dataNew.isPlayer = true;
+                        dataNew.tileType = TileType.NONE;
+                        break;
+                    case 'G':
+                        dataNew.element = BlobElement.GRASS;
+                        dataNew.isPlayer = true;
+                        dataNew.tileType = TileType.NONE;
+                        break;
+                    case 'S':
+                        dataNew.element = BlobElement.STONE;
+                        dataNew.isPlayer = true;
+                        dataNew.tileType = TileType.NONE;
+                        break;
+                    case 'i':
+                        dataNew.element = BlobElement.ICE;
+                        dataNew.isPlayer = false;
+                        dataNew.tileType = TileType.NONE;
+                        break;
+                    case 'b':
+                        dataNew.element = BlobElement.BOX;
+                        dataNew.isPlayer = false;
+                        dataNew.tileType = TileType.NONE;
+                        break;
+                }
+                data[y*width+x] = dataNew;
+            }
+        }
+        setUpLevel(data,newLevel);
+    }
+
+    protected void setUpLevel(TileData[] data, bool newLevel)
     {
         tiles = new Tile[width, height];
         entityNodes = new Dictionary<EntityData, Node2D>();
@@ -145,71 +175,30 @@ public class LevelController : TileMap
         {
             for(int x = 0; x < width; x++)
             {
-                char c = levelString[y*width+x];
-                switch(c)
+                TileData c = data[y*width+x];
+                if(newLevel)
                 {
-                    case ' ':
-                        tiles[x,y] = new Tile(TileType.NONE);
-                        if(newLevel)
+                    switch(c.tileType)
+                    {
+                        case TileType.NONE:
                             SetCell(x, y, 0);
-                    break;
-                    case '0':
-                        tiles[x,y] = new Tile(TileType.BLOCK);
-                        if(newLevel)
+                            break;
+                        case TileType.BLOCK:
                             SetCell(x, y, 1);
-                        break;
-                    case 'v':
-                        tiles[x,y] = new Tile(TileType.VICTORY);
-                        if(newLevel)
+                            break;
+                        case TileType.VICTORY:
                             SetCell(x, y, 2);
-                        break;
-                    case 'V':
-                        tiles[x,y] = new Tile(TileType.VICTORY_PLAYER);
-                        if(newLevel)
+                            break;
+                        case TileType.VICTORY_PLAYER:
                             SetCell(x, y, 3);
-                        break;
-                    case '1':
-                        tiles[x,y] = new Tile(TileType.CONVERT_FIRE);
-                        if(newLevel)
-                            SetCell(x, y, 6);
-                        break;
-                    case '2':
-                        tiles[x,y] = new Tile(TileType.CONVERT_WATER);
-                        if(newLevel)
-                            SetCell(x, y, 5);
-                        break;
-                    case '3':
-                        tiles[x,y] = new Tile(TileType.CONVERT_GRASS);
-                        if(newLevel)
-                            SetCell(x, y, 4);
-                        break;
-                    case 'g':
-                    case 'w':
-                    case 'f':
-                    case 's':
-                    case 'i':
-                    case '*':
-                    case 'b':
-                    case ']':
-                    case '[':
-                    case '\\':
-                    case '`':
-                    case '~':
-                        entities.Add(new BlobData(new Vector2(x,y), charToElement(c)));
-                        tiles[x,y] = new Tile(TileType.NONE);
-                        if(newLevel)
-                            SetCell(x, y, 0);
-                        break;
-                    case 'G':
-                    case 'W':
-                    case 'F':
-                    case 'S':
-                        entities.Add(new BlobData(new Vector2(x,y), charToElement(char.ToLower(c)), true));
-                        tiles[x,y] = new Tile(TileType.NONE);
-                        if(newLevel)
-                            SetCell(x, y, 0);
-                        break;
+                            break;
+                    }
                 }
+                if(c.element != BlobElement.NONE)
+                {
+                    entities.Add(new BlobData(new Vector2(x,y), c.element, c.isPlayer));
+                }
+                tiles[x,y] = new Tile(c.tileType);
             }
         }
         if(newLevel)
@@ -250,7 +239,10 @@ public class LevelController : TileMap
             getTile(entity.position).entity = entity;
         }
 
-        updateEntities(false);
+        foreach(var entity in entities)
+        {
+            ((BlobData)entity).getConnections();
+        }
     }
 
     public BlobElement charToElement(char type)
@@ -345,11 +337,11 @@ public class LevelController : TileMap
             turnNumber = 0;
             destroyLevel();
             setUpLevel(currentLevel, false);
-            undoList = new List<string>();
+            undoList = new List<TileData[]>();
         }
         if(Input.IsActionJustPressed("menu"))
         {
-            GetTree().ChangeScene("res://Level/LevelSelect.tscn");
+            GetTree().ChangeScene(backScene);
         }
     }
 
@@ -379,14 +371,11 @@ public class LevelController : TileMap
         return connected;
     }
 
-    public void updateEntities(bool preUpdate)
+    public void updateEntities()
     {
-        if(preUpdate)
+        foreach(EntityData entity in entities)
         {
-            foreach(EntityData entity in entities)
-            {
-                entity.PreUpdate();
-            }
+            entity.PreUpdate();
         }
 
         foreach(EntityData entity in entities)
@@ -423,7 +412,7 @@ public class LevelController : TileMap
         turnNumber += 1;
         SoundController.instance.play("Move");
 
-		undoList.Insert(0, levelToString());
+		undoList.Insert(0, levelToData());
         HashSet<BlobData> seen = new HashSet<BlobData>();
 
         for(int i = 0; i < players.Count; ++i)
@@ -471,7 +460,7 @@ public class LevelController : TileMap
             }
         }
 
-        updateEntities(true);
+        updateEntities();
 
         if(checkVictory())
         {

@@ -164,9 +164,9 @@ __meta__ = {
 
 [node name="Key" type="PanelContainer" parent="."]
 margin_left = 9.0
-margin_top = 16.0
+margin_top = 20.0
 margin_right = 189.0
-margin_bottom = 169.0
+margin_bottom = 154.0
 rect_scale = Vector2( 0.5, 0.5 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -176,15 +176,14 @@ __meta__ = {
 margin_left = 2.0
 margin_top = 2.0
 margin_right = 178.0
-margin_bottom = 151.0
+margin_bottom = 132.0
 text = "0=Wall
 Space=Empty
 FWGS=Player
 fwgs=Blob
 b=Box 
 i=Ice
-Vv=Victory
-123=Convert"
+Vv=Victory"
 
 [node name="HBoxContainer" parent="." instance=ExtResource( 4 )]
 
