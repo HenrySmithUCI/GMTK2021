@@ -44,7 +44,6 @@ public class LevelController : TileMap
             return;
         turnNumber -= 1;
         destroyLevel();
-        //string temp = undoList[0].Replace('w','*');
         setUpLevel(undoList[0], false);
         undoList.RemoveAt(0);
     }

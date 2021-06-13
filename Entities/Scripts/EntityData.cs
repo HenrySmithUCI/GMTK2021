@@ -65,9 +65,6 @@ public class BlobData : EntityData
             case BlobElement.BOX_BURNING_INIT:
                 level.entityNodes[this].Call("ChangeElement", BlobElement.BOX_BURNING);
                 break;
-            case BlobElement.GRASS_BURNING_INIT:
-                level.entityNodes[this].Call("ChangeElement", BlobElement.GRASS_BURNING);
-                break;
             case BlobElement.GRASS_BURNING:
                 deathFlag = true;
                 break;
@@ -135,13 +132,33 @@ public class BlobData : EntityData
                 }
                 else if (neighborElements.Contains(BlobElement.WATER))
                 {
-                    level.entityNodes[this].Call("SetParticles", BlobElement.GRASS);
+                    level.entityNodes[this].Call("ChangeElement", BlobElement.GRASS);
+                }
+                break;
+            case BlobElement.GRASS_BURNING_INIT:
+                if (neighborElements.Contains(BlobElement.WATER))
+                {
+                    level.entityNodes[this].Call("ChangeElement", BlobElement.GRASS);
+                }
+                else
+                {
+                    level.entityNodes[this].Call("ChangeElement", BlobElement.GRASS_BURNING);
+                }
+                break;
+            case BlobElement.BOX_BURNING_INIT:
+                if (neighborElements.Contains(BlobElement.WATER))
+                {
+                    level.entityNodes[this].Call("ChangeElement", BlobElement.BOX);
+                }
+                else
+                {
+                    level.entityNodes[this].Call("ChangeElement", BlobElement.BOX_BURNING);
                 }
                 break;
             case BlobElement.GRASS_BURNING:
                 if (neighborElements.Contains(BlobElement.WATER))
                 {
-                    level.entityNodes[this].Call("SetParticles", BlobElement.GRASS);
+                    level.entityNodes[this].Call("ChangeElement", BlobElement.GRASS);
                     deathFlag = false;
                 }
                 break;
