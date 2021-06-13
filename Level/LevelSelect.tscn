@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Level/LevelSelect.cs" type="Script" id=1]
 [ext_resource path="res://Level/Tiles.tres" type="TileSet" id=2]
 [ext_resource path="res://Sophia/CustomTheme.tres" type="Theme" id=3]
+[ext_resource path="res://Sounds/select.wav" type="AudioStream" id=4]
+[ext_resource path="res://Sounds/Sound.cs" type="Script" id=5]
 
 [node name="LevelSelect" type="Control"]
 anchor_right = 1.0
@@ -24,8 +26,9 @@ margin_left = 17.6514
 margin_top = 4.30582
 margin_right = 87.6514
 margin_bottom = 26.3058
+focus_neighbour_left = NodePath(".")
 focus_neighbour_top = NodePath("../GridContainer/Button6")
-focus_neighbour_right = NodePath("../GridContainer/Button6")
+focus_neighbour_right = NodePath(".")
 focus_neighbour_bottom = NodePath("../GridContainer/Button1")
 text = "Back"
 __meta__ = {
@@ -37,9 +40,10 @@ margin_left = 135.384
 margin_top = 151.405
 margin_right = 317.384
 margin_bottom = 173.405
-focus_neighbour_top = NodePath("../GridContainer/Button6")
-focus_neighbour_right = NodePath("../GridContainer/Button6")
-focus_neighbour_bottom = NodePath("../GridContainer/Button1")
+focus_neighbour_left = NodePath(".")
+focus_neighbour_top = NodePath("../GridContainer/Button10")
+focus_neighbour_right = NodePath(".")
+focus_neighbour_bottom = NodePath("../GridContainer/Button5")
 text = "Make Levels"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -63,7 +67,7 @@ __meta__ = {
 margin_right = 54.0
 margin_bottom = 22.0
 focus_neighbour_left = NodePath("../Button5")
-focus_neighbour_top = NodePath("../../BackButton")
+focus_neighbour_top = NodePath("../../Back")
 focus_neighbour_right = NodePath("../Button2")
 focus_neighbour_bottom = NodePath("../Button6")
 text = "1"
@@ -73,7 +77,7 @@ margin_left = 58.0
 margin_right = 112.0
 margin_bottom = 22.0
 focus_neighbour_left = NodePath("../Button1")
-focus_neighbour_top = NodePath("../Button7")
+focus_neighbour_top = NodePath("../../Back")
 focus_neighbour_right = NodePath("../Button3")
 focus_neighbour_bottom = NodePath("../Button7")
 text = "2"
@@ -83,7 +87,7 @@ margin_left = 116.0
 margin_right = 170.0
 margin_bottom = 22.0
 focus_neighbour_left = NodePath("../Button2")
-focus_neighbour_top = NodePath("../Button8")
+focus_neighbour_top = NodePath("../../Back")
 focus_neighbour_right = NodePath("../Button4")
 focus_neighbour_bottom = NodePath("../Button8")
 text = "3"
@@ -93,7 +97,7 @@ margin_left = 174.0
 margin_right = 228.0
 margin_bottom = 22.0
 focus_neighbour_left = NodePath("../Button3")
-focus_neighbour_top = NodePath("../Button9")
+focus_neighbour_top = NodePath("../../Custom")
 focus_neighbour_right = NodePath("../Button5")
 focus_neighbour_bottom = NodePath("../Button9")
 text = "4"
@@ -103,7 +107,7 @@ margin_left = 232.0
 margin_right = 286.0
 margin_bottom = 22.0
 focus_neighbour_left = NodePath("../Button4")
-focus_neighbour_top = NodePath("../Button10")
+focus_neighbour_top = NodePath("../../Custom")
 focus_neighbour_right = NodePath("../Button1")
 focus_neighbour_bottom = NodePath("../Button10")
 text = " 5 "
@@ -115,7 +119,7 @@ margin_bottom = 48.0
 focus_neighbour_left = NodePath("../Button10")
 focus_neighbour_top = NodePath("../Button1")
 focus_neighbour_right = NodePath("../Button7")
-focus_neighbour_bottom = NodePath("../../BackButton")
+focus_neighbour_bottom = NodePath("../../Back")
 text = " 6 "
 
 [node name="Button7" type="Button" parent="GridContainer"]
@@ -126,7 +130,7 @@ margin_bottom = 48.0
 focus_neighbour_left = NodePath("../Button6")
 focus_neighbour_top = NodePath("../Button2")
 focus_neighbour_right = NodePath("../Button8")
-focus_neighbour_bottom = NodePath("../Button2")
+focus_neighbour_bottom = NodePath("../../Back")
 text = " 7 "
 
 [node name="Button8" type="Button" parent="GridContainer"]
@@ -137,7 +141,7 @@ margin_bottom = 48.0
 focus_neighbour_left = NodePath("../Button7")
 focus_neighbour_top = NodePath("../Button3")
 focus_neighbour_right = NodePath("../Button9")
-focus_neighbour_bottom = NodePath("../Button3")
+focus_neighbour_bottom = NodePath("../../Custom")
 text = " 8 "
 
 [node name="Button9" type="Button" parent="GridContainer"]
@@ -148,7 +152,7 @@ margin_bottom = 48.0
 focus_neighbour_left = NodePath("../Button8")
 focus_neighbour_top = NodePath("../Button4")
 focus_neighbour_right = NodePath("../Button10")
-focus_neighbour_bottom = NodePath("../Button4")
+focus_neighbour_bottom = NodePath("../../Custom")
 text = " 9 "
 
 [node name="Button10" type="Button" parent="GridContainer"]
@@ -159,17 +163,33 @@ margin_bottom = 48.0
 focus_neighbour_left = NodePath("../Button9")
 focus_neighbour_top = NodePath("../Button5")
 focus_neighbour_right = NodePath("../Button6")
-focus_neighbour_bottom = NodePath("../Button5")
+focus_neighbour_bottom = NodePath("../../Custom")
 text = "10"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+script = ExtResource( 5 )
+[connection signal="focus_entered" from="Back" to="AudioStreamPlayer" method="Play"]
 [connection signal="pressed" from="Back" to="." method="changeLevel" binds= [ 0 ]]
+[connection signal="focus_entered" from="Custom" to="AudioStreamPlayer" method="Play"]
 [connection signal="pressed" from="Custom" to="." method="changeLevel" binds= [ -1 ]]
+[connection signal="focus_entered" from="GridContainer/Button1" to="AudioStreamPlayer" method="Play"]
 [connection signal="pressed" from="GridContainer/Button1" to="." method="changeLevel" binds= [ 1 ]]
+[connection signal="focus_entered" from="GridContainer/Button2" to="AudioStreamPlayer" method="Play"]
 [connection signal="pressed" from="GridContainer/Button2" to="." method="changeLevel" binds= [ 2 ]]
+[connection signal="focus_entered" from="GridContainer/Button3" to="AudioStreamPlayer" method="Play"]
 [connection signal="pressed" from="GridContainer/Button3" to="." method="changeLevel" binds= [ 3 ]]
+[connection signal="focus_entered" from="GridContainer/Button4" to="AudioStreamPlayer" method="Play"]
 [connection signal="pressed" from="GridContainer/Button4" to="." method="changeLevel" binds= [ 4 ]]
+[connection signal="focus_entered" from="GridContainer/Button5" to="AudioStreamPlayer" method="Play"]
 [connection signal="pressed" from="GridContainer/Button5" to="." method="changeLevel" binds= [ 5 ]]
+[connection signal="focus_entered" from="GridContainer/Button6" to="AudioStreamPlayer" method="Play"]
 [connection signal="pressed" from="GridContainer/Button6" to="." method="changeLevel" binds= [ 6 ]]
+[connection signal="focus_entered" from="GridContainer/Button7" to="AudioStreamPlayer" method="Play"]
 [connection signal="pressed" from="GridContainer/Button7" to="." method="changeLevel" binds= [ 7 ]]
+[connection signal="focus_entered" from="GridContainer/Button8" to="AudioStreamPlayer" method="Play"]
 [connection signal="pressed" from="GridContainer/Button8" to="." method="changeLevel" binds= [ 8 ]]
+[connection signal="focus_entered" from="GridContainer/Button9" to="AudioStreamPlayer" method="Play"]
 [connection signal="pressed" from="GridContainer/Button9" to="." method="changeLevel" binds= [ 9 ]]
+[connection signal="focus_entered" from="GridContainer/Button10" to="AudioStreamPlayer" method="Play"]
 [connection signal="pressed" from="GridContainer/Button10" to="." method="changeLevel" binds= [ 10 ]]
