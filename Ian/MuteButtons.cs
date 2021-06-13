@@ -5,7 +5,6 @@ public class MuteButtons : HBoxContainer
 {
     public override void _Ready()
     {
-        GetNode<CheckBox>("MusicMute").Pressed = AudioServer.IsBusMute(2);
         GetNode<CheckBox>("EffectsMute").Pressed = AudioServer.IsBusMute(1);
     }
 
