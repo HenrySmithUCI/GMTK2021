@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class LevelController : TileMap
 {
+    public static int levelNum;
+
     [Export]
     public PackedScene blobScene = null;
 
@@ -15,6 +17,7 @@ public class LevelController : TileMap
     public List<string> undoList = new List<string>();
     public string currentLevel;
     public float undoTimer = 0.5f;
+    public bool victory = false;
 
     // player is always entities[0]
     //public BoxData[] entities;
@@ -298,6 +301,8 @@ public class LevelController : TileMap
 
     public override void _Process(float delta)
     {
+        if(victory)
+            return;
         if (players.Count > 0)
         {
             if (Input.IsActionJustPressed("right"))
@@ -458,7 +463,34 @@ public class LevelController : TileMap
             }
         }
 
+        if(checkVictory())
+        {
+            victory = true;
+            UI.instance.showWin();
+        }
+    }
 
+    public bool checkVictory()
+    {
+        bool victory = true;
+        foreach(Vector2 vec in GetUsedCellsById((int)TileType.VICTORY))
+        {
+            if(getTile(vec).entity == null || getTile(vec).entity.isPlayer)
+            {
+                victory = false;
+                break;
+            }
+        }
+        if(victory)
+            foreach(Vector2 vec in GetUsedCellsById((int)TileType.VICTORY_PLAYER))
+            {
+                if(getTile(vec).entity == null || getTile(vec).entity.isPlayer == false)
+                {
+                    victory = false;
+                    break;
+                }
+            }
+        return victory;
     }
 
     // checks if a specific tile is empty

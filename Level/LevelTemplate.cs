@@ -17,7 +17,7 @@ public class LevelTemplate : LevelController
 "00000000000000000000" +
 "0                  0" +
 "0       00         0" +
-"0   ggg            0" +
+"0   g              0" +
 "0                  0" +
 "0       F   bb     0" +
 "0                  0" +

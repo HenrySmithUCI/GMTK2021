@@ -11,6 +11,7 @@ public class LevelMakeLevel : LevelController
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
+        levelNum = -1;
         currentLevel = LevelMake.levelString;
         setUpLevel(currentLevel);
     }
