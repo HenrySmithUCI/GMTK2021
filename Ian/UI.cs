@@ -20,7 +20,7 @@ public class UI : CanvasLayer
     public void showWin()
     {
         GetNode<Control>("WinLabel").Visible = true;
-        victorySound.Playing = true;
+        SoundController.instance.play("Victory");
     }
 
     public void next()

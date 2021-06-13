@@ -1,8 +1,25 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Sounds/theme.wav" type="AudioStream" id=1]
+[ext_resource path="res://Sounds/victory.wav" type="AudioStream" id=2]
+[ext_resource path="res://Sounds/move.wav" type="AudioStream" id=3]
+[ext_resource path="res://Sounds/select.wav" type="AudioStream" id=4]
+[ext_resource path="res://Sounds/SoundController.cs" type="Script" id=5]
 
 [node name="Music" type="AudioStreamPlayer"]
 stream = ExtResource( 1 )
 volume_db = -10.0
 bus = "Music"
+script = ExtResource( 5 )
+
+[node name="Select" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+bus = "Effects"
+
+[node name="Move" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+bus = "Effects"
+
+[node name="Victory" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+bus = "Effects"

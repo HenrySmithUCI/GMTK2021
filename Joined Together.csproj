@@ -66,10 +66,11 @@
     <Compile Include="Level\LevelMake.cs" />
     <Compile Include="Level\Levels\LevelMakeLevel.cs" />
     <Compile Include="Level\LevelTemplate.cs" />
+    <Compile Include="Level\PlaySelect.cs" />
     <Compile Include="Level\Tile.cs" />
     <Compile Include="Level\Main.cs" />
     <Compile Include="Level\LevelSelect.cs" />
-    <Compile Include="Sounds\Sound.cs" />
+    <Compile Include="Sounds\SoundController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
