@@ -7,7 +7,6 @@ public class MuteButtons : HBoxContainer
     {
         GetNode<CheckBox>("MusicMute").Pressed = AudioServer.IsBusMute(2);
         GetNode<CheckBox>("EffectsMute").Pressed = AudioServer.IsBusMute(1);
-
     }
 
     public void toggleMusicMute(bool val)
