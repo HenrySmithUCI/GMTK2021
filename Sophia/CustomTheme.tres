@@ -1,9 +1,10 @@
-[gd_resource type="Theme" load_steps=13 format=2]
+[gd_resource type="Theme" load_steps=16 format=2]
 
 [ext_resource path="res://Sophia/PixelFont.tres" type="DynamicFont" id=1]
 [ext_resource path="res://Ian/Button.png" type="Texture" id=2]
 [ext_resource path="res://Ian/Button_Pressed.png" type="Texture" id=3]
 [ext_resource path="res://Ian/empty.png" type="Texture" id=4]
+[ext_resource path="res://Ian/Panel.png" type="Texture" id=5]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 2 )
@@ -57,6 +58,30 @@ region_rect = Rect2( 0, 0, 1, 1 )
 texture = ExtResource( 4 )
 region_rect = Rect2( 0, 0, 1, 1 )
 
+[sub_resource type="StyleBoxTexture" id=9]
+texture = ExtResource( 5 )
+region_rect = Rect2( 0, 0, 8, 8 )
+margin_left = 2.0
+margin_right = 2.0
+margin_top = 2.0
+margin_bottom = 2.0
+expand_margin_left = 2.0
+expand_margin_right = 2.0
+expand_margin_top = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxTexture" id=10]
+texture = ExtResource( 5 )
+region_rect = Rect2( 0, 0, 8, 8 )
+margin_left = 2.0
+margin_right = 2.0
+margin_top = 2.0
+margin_bottom = 2.0
+expand_margin_left = 2.0
+expand_margin_right = 2.0
+expand_margin_top = 2.0
+expand_margin_bottom = 2.0
+
 [resource]
 default_font = ExtResource( 1 )
 Button/colors/font_color = Color( 0.88, 0.88, 0.88, 1 )
@@ -84,3 +109,5 @@ LineEdit/icons/clear = ExtResource( 4 )
 LineEdit/styles/focus = SubResource( 6 )
 LineEdit/styles/normal = SubResource( 7 )
 LineEdit/styles/read_only = SubResource( 8 )
+Panel/styles/panel = SubResource( 9 )
+PanelContainer/styles/panel = SubResource( 10 )
