@@ -11,7 +11,9 @@ public class LevelMakeLevel : LevelController
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        setUpLevel(LevelMake.levelString);
+        levelNum = -1;
+        currentLevel = LevelMake.levelString;
+        setUpLevel(currentLevel);
     }
 
     public override void _Process(float delta)
@@ -26,7 +28,6 @@ public class LevelMakeLevel : LevelController
             {
                 move(new Vector2(-1, 0));
             }
-
             if (Input.IsActionJustPressed("up"))
             {
                 move(new Vector2(0, -1));
@@ -34,6 +35,10 @@ public class LevelMakeLevel : LevelController
             else if (Input.IsActionJustPressed("down"))
             {
                 move(new Vector2(0, 1));
+            }
+            else if (Input.IsActionJustPressed("step"))
+            {
+                move(new Vector2(0, 0));
             }
         }
 

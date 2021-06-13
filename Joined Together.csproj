@@ -60,6 +60,7 @@
     <Compile Include=".prop\AssemblyInfo.cs" />
     <Compile Include="Entities\Scripts\Blob.cs" />
     <Compile Include="Entities\Scripts\EntityData.cs" />
+    <Compile Include="Ian\UI.cs" />
     <Compile Include="Level\LevelController.cs" />
     <Compile Include="Level\LevelMake.cs" />
     <Compile Include="Level\Levels\LevelMakeLevel.cs" />
