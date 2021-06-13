@@ -1,0 +1,102 @@
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://Ian/Mute.png" type="Texture" id=1]
+[ext_resource path="res://Ian/Unmute.png" type="Texture" id=2]
+[ext_resource path="res://Ian/UnmuteMusic.png" type="Texture" id=3]
+[ext_resource path="res://Ian/MuteMusic.png" type="Texture" id=4]
+[ext_resource path="res://Ian/MuteButtons.cs" type="Script" id=5]
+[ext_resource path="res://Ian/empty.png" type="Texture" id=6]
+
+[sub_resource type="StyleBoxTexture" id=1]
+texture = ExtResource( 6 )
+region_rect = Rect2( 0, 0, 1, 1 )
+
+[sub_resource type="StyleBoxTexture" id=2]
+texture = ExtResource( 6 )
+region_rect = Rect2( 0, 0, 1, 1 )
+
+[sub_resource type="StyleBoxTexture" id=3]
+texture = ExtResource( 6 )
+region_rect = Rect2( 0, 0, 1, 1 )
+
+[sub_resource type="StyleBoxTexture" id=4]
+texture = ExtResource( 6 )
+region_rect = Rect2( 0, 0, 1, 1 )
+
+[sub_resource type="StyleBoxTexture" id=5]
+texture = ExtResource( 6 )
+region_rect = Rect2( 0, 0, 1, 1 )
+
+[sub_resource type="StyleBoxTexture" id=6]
+texture = ExtResource( 6 )
+region_rect = Rect2( 0, 0, 1, 1 )
+
+[sub_resource type="StyleBoxTexture" id=7]
+texture = ExtResource( 6 )
+region_rect = Rect2( 0, 0, 1, 1 )
+
+[sub_resource type="StyleBoxTexture" id=8]
+texture = ExtResource( 6 )
+region_rect = Rect2( 0, 0, 1, 1 )
+
+[sub_resource type="StyleBoxTexture" id=9]
+texture = ExtResource( 6 )
+region_rect = Rect2( 0, 0, 1, 1 )
+
+[sub_resource type="StyleBoxTexture" id=10]
+texture = ExtResource( 6 )
+region_rect = Rect2( 0, 0, 1, 1 )
+
+[sub_resource type="StyleBoxTexture" id=11]
+texture = ExtResource( 6 )
+region_rect = Rect2( 0, 0, 1, 1 )
+
+[sub_resource type="StyleBoxTexture" id=12]
+texture = ExtResource( 6 )
+region_rect = Rect2( 0, 0, 1, 1 )
+
+[node name="HBoxContainer" type="HBoxContainer"]
+modulate = Color( 1, 1, 1, 0.729412 )
+margin_left = 16.0
+margin_top = -43.0
+margin_right = 68.0
+margin_bottom = -3.0
+rect_scale = Vector2( 0.7, 0.7 )
+rect_pivot_offset = Vector2( -53, 119 )
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MusicMute" type="CheckBox" parent="."]
+margin_right = 16.0
+margin_bottom = 40.0
+focus_mode = 0
+custom_icons/radio_checked = ExtResource( 4 )
+custom_icons/checked = ExtResource( 4 )
+custom_icons/radio_unchecked = ExtResource( 3 )
+custom_icons/unchecked = ExtResource( 3 )
+custom_styles/hover = SubResource( 1 )
+custom_styles/pressed = SubResource( 2 )
+custom_styles/focus = SubResource( 3 )
+custom_styles/disabled = SubResource( 4 )
+custom_styles/hover_pressed = SubResource( 5 )
+custom_styles/normal = SubResource( 6 )
+
+[node name="EffectsMute" type="CheckBox" parent="."]
+margin_left = 20.0
+margin_right = 36.0
+margin_bottom = 40.0
+focus_mode = 0
+custom_icons/radio_checked = ExtResource( 1 )
+custom_icons/checked = ExtResource( 1 )
+custom_icons/radio_unchecked = ExtResource( 2 )
+custom_icons/unchecked = ExtResource( 2 )
+custom_styles/hover = SubResource( 7 )
+custom_styles/pressed = SubResource( 8 )
+custom_styles/focus = SubResource( 9 )
+custom_styles/disabled = SubResource( 10 )
+custom_styles/hover_pressed = SubResource( 11 )
+custom_styles/normal = SubResource( 12 )
+[connection signal="toggled" from="MusicMute" to="." method="toggleMusicMute"]
+[connection signal="toggled" from="EffectsMute" to="." method="toggleEffectsMute"]
